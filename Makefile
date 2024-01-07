@@ -49,7 +49,7 @@ migrations:
 test: static unit integration acceptance
 
 .PHONY: static
-static: stan code-sniffer mess-detector magic-numbers
+static: stan code-sniffer mess-detector magic-numbers deptrac
 
 .PHONY: stan
 stan:
@@ -70,6 +70,10 @@ mess-detector:
 .PHONY: magic-numbers
 magic-numbers:
 	@$(DC) exec php ./script/magic-number-detection.sh
+
+.PHONY: deptrac
+deptrac:
+	@$(DC) exec php ./script/deptrac.sh
 
 .PHONY: unit
 unit:

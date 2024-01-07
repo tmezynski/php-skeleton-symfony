@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo -e "\033[1;33mRunning acceptance tests:\033[0m"
+echo -e "\033[1;33mRunning mutation tests:\033[0m"
 php \
     -d pcov.enabled=0 \
     -d xdebug.mode=off \
