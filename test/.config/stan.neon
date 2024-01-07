@@ -1,0 +1,13 @@
+includes:
+  - phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+  level: 9
+  parallel:
+    maximumNumberOfProcesses: 8
+    processTimeout: 300.0
+  paths:
+    - ../../src
+    - ../.
+  excludePaths:
+#    - ../bootstrap.php

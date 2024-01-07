@@ -1,0 +1,8 @@
+default:
+    suites:
+        default:
+            contexts:
+                - Acceptance\Behat\DemoContext
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension: null

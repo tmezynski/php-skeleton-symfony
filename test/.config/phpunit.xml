@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        colors="true"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+        bootstrap="../bootstrap.php"
+        cacheDirectory="../../var/cache/.phpunit.cache"
+>
+  <testsuites>
+    <testsuite name="unit">
+      <directory suffix="Test.php">../Unit</directory>
+    </testsuite>
+    <testsuite name="integration">
+      <directory suffix="Test.php">../Integration</directory>
+    </testsuite>
+  </testsuites>
+
+  <coverage
+          includeUncoveredFiles="true"
+          ignoreDeprecatedCodeUnits="false"
+          disableCodeCoverageIgnore="true"
+  >
+    <report>
+      <html outputDirectory="../../var/coverage" lowUpperBound="50" highLowerBound="90"/>
+    </report>
+  </coverage>
+
+  <source>
+    <include>
+      <directory suffix=".php">../../src</directory>
+    </include>
+    <exclude>
+      <directory>../../src/Kernel.php</directory>
+    </exclude>
+  </source>
+
+  <php>
+    <env name="APP_ENV" value="test"/>
+    <env name="APP_DEBUG" value="false"/>
+    <server name="KERNEL_CLASS" value="App\Kernel"/>
+  </php>
+</phpunit>

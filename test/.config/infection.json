@@ -1,0 +1,14 @@
+{
+  "$schema": "../../vendor/infection/infection/resources/schema.json",
+  "testFramework":"phpunit",
+  "initialTestsPhpOptions": "-d pcov.enabled=1 -d xdebug.mode=off",
+  "testFrameworkOptions": "--testsuite=unit",
+  "source": {
+    "directories": [
+      "src"
+    ]
+  },
+  "mutators": {
+    "@default": true
+  }
+}
