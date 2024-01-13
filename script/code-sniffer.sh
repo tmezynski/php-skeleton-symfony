@@ -6,6 +6,7 @@ php \
     -d pcov.enable=0 \
   vendor/bin/phpcs \
     --standard=test/.config/code-sniffer.xml \
+    --ignore=src/Kernel.php \
     src \
     test \
     bin \

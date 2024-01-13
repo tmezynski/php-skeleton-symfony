@@ -6,4 +6,4 @@ php \
     -d xdebug.mode=off \
   vendor/bin/deptrac analyse \
     --config-file=test/.config/deptrac.yml \
-    --cache-file=var/cache/.deptrac.cache
+    --cache-file=var/.deptrac.cache
