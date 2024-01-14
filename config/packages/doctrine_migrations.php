@@ -11,7 +11,7 @@ return static function (DoctrineMigrationsConfig $doctrineMigration): void {
     $doctrineMigration
         ->storage()
         ->tableStorage()
-        ->tableName('migration_versions_safeguarding')
+        ->tableName('migrations')
         ->versionColumnName('version')
         ->versionColumnLength(191)
         ->executedAtColumnName('executed_at')

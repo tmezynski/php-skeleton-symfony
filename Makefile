@@ -14,12 +14,12 @@ images:
 images-force:
 	@$(DC) build --no-cache
 
-.PHONY: start
-start:
+.PHONY: up
+up:
 	@$(DC) up -d
 
-.PHONY: stop
-stop:
+.PHONY: down
+down:
 	@$(DC) down
 
 .PHONY: destroy
@@ -27,12 +27,21 @@ destroy:
 	@$(DC) down -v
 
 .PHONY: init
-init: start
+init: up
 	$(DC) exec php composer install
 
 .PHONY: console
 console:
 	@$(DC) exec php sh
+
+################################################### DATABASE ###########################################################
+.PHONY: migrations
+migrations:
+	@$(DC) exec php bin/console doctrine:migrations:migrate --no-interaction
+
+.PHONY: create-migration
+create-migration:
+	@$(DC) exec php bin/console doctrine:migrations:generate --no-interaction
 
 ########################################################################################################################
 #################################################### TESTS #############################################################
@@ -40,6 +49,7 @@ console:
 .PHONY: test
 test: static unit integration acceptance
 
+#################################################### STATIC ############################################################
 .PHONY: static
 static: stan code-sniffer mess-detector magic-numbers deptrac
 
@@ -67,18 +77,27 @@ magic-numbers:
 deptrac:
 	@$(DC) exec php ./script/deptrac.sh
 
+##################################################### UNIT #############################################################
 .PHONY: unit
 unit:
 	@$(DC) exec php ./script/unit.sh
 
+################################################## INTEGRATION #########################################################
 .PHONY: integration
 integration:
 	@$(DC) exec php ./script/integration.sh
 
+################################################### ACCEPTANCE #########################################################
 .PHONY: acceptance
 acceptance:
 	@$(DC) exec php ./script/acceptance.sh
 
+#################################################### MUTATION ##########################################################
 .PHONY: infection
 infection:
 	@$(DC) exec php ./script/infection.sh
+
+#################################################### COVERAGE ##########################################################
+.PHONY: coverage
+coverage:
+	@$(DC) exec php ./script/coverage.sh
