@@ -28,7 +28,9 @@ destroy:
 
 .PHONY: init
 init: up
-	$(DC) exec php composer install
+	@$(DC) exec redis redis-cli flushall
+	@$(DC) exec php composer install
+	#@make migrations - enable after adding first migration
 
 .PHONY: console
 console:
