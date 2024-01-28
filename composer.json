@@ -50,9 +50,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Unit\\": "test/Unit",
-            "Integration\\": "test/Integration",
-            "Acceptance\\": "test/Acceptance"
+            "Test\\": "test"
         }
     },
     "replace": {

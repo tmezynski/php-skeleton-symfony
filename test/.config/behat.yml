@@ -3,7 +3,7 @@ default:
     default:
       paths: [ '%paths.base%/../Acceptance' ]
       contexts:
-        - Acceptance\Context\DemoContext
+        - Test\Utils\Context\DemoContext
 
   formatters:
     pretty:

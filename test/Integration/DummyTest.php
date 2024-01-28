@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration;
+namespace Test\Integration;
 
 use App\Dummy;
 

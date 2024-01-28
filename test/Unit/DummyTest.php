@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Unit;
+namespace Test\Unit;
 
 use App\Dummy;
 use PHPUnit\Framework\TestCase;
