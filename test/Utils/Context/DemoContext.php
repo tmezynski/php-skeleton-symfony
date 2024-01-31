@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Test\Utils\Context;
 
+use Behat\Behat\Context\Context;
 use Test\Utils\Dsl\Request\TestRequest;
 
-final class DemoContext extends AbstractContext
+final class DemoContext implements Context
 {
     public function __construct(private readonly TestRequest $testRequest)
     {

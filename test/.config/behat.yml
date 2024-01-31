@@ -3,6 +3,8 @@ default:
     default:
       paths: [ '%paths.base%/../Acceptance' ]
       contexts:
+        - Test\Utils\Context\DatabaseContext
+        - Test\Utils\Context\TimeContext
         - Test\Utils\Context\DemoContext
 
   formatters:

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Test\Integration;
 
-use App\Dummy;
+use DateTimeImmutable;
 
 final class DummyTest extends IntegrationTestCase
 {
     public function testDummy(): void
     {
-        $this->assertTrue((new Dummy())->check());
+        $date = new DateTimeImmutable('2024-01-01 12:30:00');
+        $this->clock->travelTo($date);
+        $this->assertEquals($date, $this->clock->now());
     }
 }

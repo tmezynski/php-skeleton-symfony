@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Kernel;
+use App\Shared\Domain\ClockInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Test\Utils\Context\AbstractContext;
+use Test\Utils\Context\DatabaseContext;
 use Test\Utils\Context\DemoContext;
+use Test\Utils\Context\TimeContext;
 use Test\Utils\Dsl\Request\TestRequest;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -19,12 +20,14 @@ return static function (ContainerConfigurator $container): void {
 
     //Contexts
     $services
-        ->set(AbstractContext::class)
-        ->abstract()
-        ->call('setUp', [service(Kernel::class)]);
+        ->set(DatabaseContext::class)
+        ->args([service('doctrine.dbal.db_connection')]);
+
+    $services
+        ->set(TimeContext::class)
+        ->args([service(ClockInterface::class)]);
 
     $services
         ->set(DemoContext::class)
-        ->parent(AbstractContext::class)
         ->args([service(TestRequest::class)]);
 };
