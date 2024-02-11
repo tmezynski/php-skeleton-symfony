@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SharedKernel\Domain\ValueObject;
+namespace SharedKernel\Domain;
 
-use SharedKernel\Domain\ValueObject\Money\Exception\DifferentCurrency;
+use InvalidArgumentException;
 
 final class Money
 {
@@ -64,7 +64,9 @@ final class Money
             return;
         }
 
-        throw new DifferentCurrency($this->currency, $money->currency);
+        throw new InvalidArgumentException(
+            sprintf('Expected currency %s, got %s', $this->currency->name, $money->currency->name)
+        );
     }
 
     public function amount(): string

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SharedKernel\Unit\Domain\ValueObject;
+namespace SharedKernel\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
-use SharedKernel\Domain\ValueObject\BigDecimal;
+use SharedKernel\Domain\BigDecimal;
 
 final class BigDecimalTest extends TestCase
 {

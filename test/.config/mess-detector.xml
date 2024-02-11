@@ -6,22 +6,10 @@
          xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd"
 >
     <rule ref="rulesets/cleancode.xml">
-        <exclude name="StaticAccess" />
+        <exclude name="StaticAccess"/>
     </rule>
-
-    <rule ref="rulesets/cleancode.xml/StaticAccess">
-        <properties>
-            <property name="exceptions">
-                <value>
-                    \Ramsey\Uuid\Nonstandard\Uuid,
-                    \Webmozart\Assert\Assert,
-                </value>
-            </property>
-        </properties>
-    </rule>
-
-    <rule ref="rulesets/codesize.xml" />
+    <rule ref="rulesets/codesize.xml"/>
     <rule ref="rulesets/controversial.xml"/>
     <rule ref="rulesets/unusedcode.xml"/>
-    <rule ref="rulesets/naming.xml" />
+    <rule ref="rulesets/naming.xml"/>
 </ruleset>

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SharedKernel\Domain\ValueObject;
+namespace SharedKernel\Domain;
 
 use Brick\Math\BigDecimal as MathBigDecimal;
 use Brick\Math\RoundingMode;

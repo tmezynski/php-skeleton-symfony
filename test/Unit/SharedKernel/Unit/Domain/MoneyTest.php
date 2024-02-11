@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SharedKernel\Unit\Domain\ValueObject;
+namespace SharedKernel\Unit\Domain;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use SharedKernel\Domain\ValueObject\Currency;
-use SharedKernel\Domain\ValueObject\Money;
-use SharedKernel\Domain\ValueObject\Money\Exception\DifferentCurrency;
+use SharedKernel\Domain\Currency;
+use SharedKernel\Domain\Money;
 
 final class MoneyTest extends TestCase
 {
@@ -16,7 +16,7 @@ final class MoneyTest extends TestCase
         $money1 = Money::create(10, Currency::AED);
         $money2 = Money::create(10, Currency::USD);
 
-        $this->expectException(DifferentCurrency::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $money1->add($money2);
     }
@@ -26,7 +26,7 @@ final class MoneyTest extends TestCase
         $money1 = Money::create(10, Currency::AED);
         $money2 = Money::create(10, Currency::USD);
 
-        $this->expectException(DifferentCurrency::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $money1->sub($money2);
     }
