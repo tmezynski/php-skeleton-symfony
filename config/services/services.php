@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Shared\Domain\ClockInterface;
-use App\Shared\Infrastructure\Clock\SystemClock;
+use SharedKernel\Application\ClockInterface;
+use SharedKernel\Infrastructure\Clock\SystemClock;
 
 //@formatter:off
 return static function (ContainerConfigurator $container): void {

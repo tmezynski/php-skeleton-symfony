@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Test\Utils\Context;
 
-use App\Shared\Domain\ClockInterface;
-use App\Shared\Infrastructure\Clock\FixedClock;
 use Behat\Behat\Context\Context;
 use DateTimeImmutable;
 use RuntimeException;
+use SharedKernel\Application\ClockInterface;
+use SharedKernel\Infrastructure\Clock\FixedClock;
 
 final class TimeContext implements Context
 {

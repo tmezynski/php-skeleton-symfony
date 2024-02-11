@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Clock;
+namespace SharedKernel\Infrastructure\Clock;
 
-use App\Shared\Domain\ClockInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
+use SharedKernel\Application\ClockInterface;
 
 final class FixedClock implements ClockInterface
 {

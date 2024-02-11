@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Shared\Domain\ClockInterface;
-use App\Shared\Infrastructure\Clock\FixedClock;
+use SharedKernel\Application\ClockInterface;
+use SharedKernel\Infrastructure\Clock\FixedClock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 // @formatter:off
