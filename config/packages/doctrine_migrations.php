@@ -17,7 +17,10 @@ return static function (DoctrineMigrationsConfig $doctrineMigration): void {
         ->executedAtColumnName('executed_at')
         ->executionTimeColumnName('execution_time');
 
-    $doctrineMigration->migrationsPath('Migrations', '%kernel.project_dir%/migrations');
+    $doctrineMigration->migrationsPath(
+        'SharedKernel\Infrastructure\Messenger\Migration\PostgreSql',
+        '%kernel.project_dir%/src/SharedKernel/Infrastructure/Messenger/Migration/PostgreSql'
+    );
 
     $doctrineMigration
         ->allOrNothing(true)

@@ -5,4 +5,4 @@ php \
     -d pcov.enabled=0 \
     -d xdebug.mode=off \
   vendor/bin/infection \
-    --configuration=test/.config/infection.json
+    --configuration=test/infection.json

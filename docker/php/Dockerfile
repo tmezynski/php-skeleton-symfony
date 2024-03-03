@@ -9,7 +9,11 @@ RUN apk --no-cache add autoconf g++ make linux-headers \
     && docker-php-ext-enable pcov \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
-    && apk del autoconf g++ make linux-headers
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del autoconf g++ make linux-headers \
+    && rm -rf /tmp/pear
 
 RUN apk --no-cache add libpq-dev  \
-    && docker-php-ext-install pdo pdo_pgsql
+    && docker-php-ext-install pdo pdo_pgsql \
+    && rm -rf /tmp/pear

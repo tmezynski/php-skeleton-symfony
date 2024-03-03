@@ -5,6 +5,6 @@ php \
     -d pcov.enabled=1 \
     -d xdebug.mode=off \
   vendor/bin/phpunit \
-    --configuration=test/.config/phpunit.xml \
+    --configuration=test/phpunit.xml \
     --testsuite=integration \
     --no-coverage

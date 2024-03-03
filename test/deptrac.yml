@@ -1,0 +1,26 @@
+parameters:
+  paths:
+    - ../src
+  layers:
+    - name: SharedDomain
+      collectors:
+        -
+          type: directory
+          value: src/SharedKernel/Domain/*
+    - name: SharedApplication
+      collectors:
+        -
+          type: directory
+          value: src/SharedKernel/Application/*
+    - name: SharedInfrastructure
+      collectors:
+        -
+          type: directory
+          value: src/SharedKernel/Infrastructure/*
+  ruleset:
+    SharedDomain: ~
+    SharedApplication:
+      - SharedDomain
+    SharedInfrastructure:
+      - SharedDomain
+      - SharedApplication

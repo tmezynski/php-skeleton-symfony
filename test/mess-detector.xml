@@ -8,8 +8,24 @@
     <rule ref="rulesets/cleancode.xml">
         <exclude name="StaticAccess"/>
     </rule>
+    <rule ref="rulesets/cleancode.xml/StaticAccess">
+        <properties>
+            <property name="exceptions">
+                <value>
+                    \Webmozart\Assert\Assert,
+                </value>
+            </property>
+            <property name="ignorepattern">
+                <value>
+                    /^create|generate|from|of/i
+                </value>
+            </property>
+        </properties>
+    </rule>
+
     <rule ref="rulesets/codesize.xml"/>
     <rule ref="rulesets/controversial.xml"/>
-    <rule ref="rulesets/unusedcode.xml"/>
-    <rule ref="rulesets/naming.xml"/>
+    <rule ref="rulesets/unusedcode.xml">
+        <exclude name="UnusedFormalParameter"/>
+    </rule>
 </ruleset>

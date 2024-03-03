@@ -5,7 +5,7 @@ php \
     -d pcov.enabled=0 \
     -d xdebug.mode=off \
   vendor/bin/behat \
-    --config=test/.config/behat.yml \
+    --config=test/behat.yml \
     --strict \
     --no-colors \
     --format=progress \

@@ -13,6 +13,9 @@ final class Uuid
     {
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     public static function generate(?string $value = null, ?string $namespace = null): self
     {
         if (null === $value) {

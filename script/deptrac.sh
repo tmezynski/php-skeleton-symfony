@@ -5,5 +5,5 @@ php \
     -d pcov.enabled=0 \
     -d xdebug.mode=off \
   vendor/bin/deptrac analyse \
-    --config-file=test/.config/deptrac.yml \
+    --config-file=test/deptrac.yml \
     --cache-file=var/.deptrac.cache

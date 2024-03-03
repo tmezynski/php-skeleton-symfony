@@ -11,9 +11,6 @@ final class BigDecimal
 {
     private readonly MathBigDecimal $value;
 
-    /**
-     * @SuppressWarnings(PHPMD.StaticAccess)
-     */
     public function __construct(int|float|string $value, int $scale = 0)
     {
         $value = MathBigDecimal::of($value);

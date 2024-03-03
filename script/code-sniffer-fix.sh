@@ -5,7 +5,7 @@ php \
     -d xdebug.mode=off \
     -d pcov.enable=0 \
   vendor/bin/phpcbf \
-    --standard=test/.config/code-sniffer.xml \
+    --standard=test/code-sniffer.xml \
     src \
     test \
     bin \

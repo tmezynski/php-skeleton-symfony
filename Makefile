@@ -30,7 +30,7 @@ destroy:
 init: up
 	@$(DC) exec redis redis-cli flushall
 	@$(DC) exec php composer install
-	#@make migrations - enable after adding first migration
+	@$(MAKE) migrations
 
 .PHONY: console
 console:
@@ -39,7 +39,8 @@ console:
 ################################################### DATABASE ###########################################################
 .PHONY: migrations
 migrations:
-	@$(DC) exec php bin/console doctrine:migrations:migrate --no-interaction
+	@$(DC) exec php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+	@$(DC) exec -e APP_ENV=test php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
 
 .PHONY: create-migration
 create-migration:
@@ -61,49 +62,49 @@ static: stan code-sniffer mess-detector magic-numbers deptrac
 
 .PHONY: stan
 stan:
-	@$(DC) exec php ./script/stan.sh
+	@$(DC) exec -e APP_ENV=test php ./script/stan.sh
 
 .PHONY: code-sniffer
 code-sniffer:
-	@$(DC) exec php ./script/code-sniffer.sh
+	@$(DC) exec -e APP_ENV=test php ./script/code-sniffer.sh
 
 .PHONY: code-sniffer-fix
 code-sniffer-fix:
-	@$(DC) exec php ./script/code-sniffer-fix.sh
+	@$(DC) exec -e APP_ENV=test php ./script/code-sniffer-fix.sh
 
 .PHONY: mess-detector
 mess-detector:
-	@$(DC) exec php ./script/mess-detector.sh
+	@$(DC) exec -e APP_ENV=test php ./script/mess-detector.sh
 
 .PHONY: magic-numbers
 magic-numbers:
-	@$(DC) exec php ./script/magic-number-detection.sh
+	@$(DC) exec -e APP_ENV=test php ./script/magic-number-detection.sh
 
 .PHONY: deptrac
 deptrac:
-	@$(DC) exec php ./script/deptrac.sh
+	@$(DC) exec -e APP_ENV=test php ./script/deptrac.sh
 
 ##################################################### UNIT #############################################################
 .PHONY: unit
 unit:
-	@$(DC) exec php ./script/unit.sh
+	@$(DC) exec -e APP_ENV=test php ./script/unit.sh
 
 ################################################## INTEGRATION #########################################################
 .PHONY: integration
 integration:
-	@$(DC) exec php ./script/integration.sh
+	@$(DC) exec -e APP_ENV=test php ./script/integration.sh
 
 ################################################### ACCEPTANCE #########################################################
 .PHONY: acceptance
 acceptance:
-	@$(DC) exec php ./script/behat.sh
+	@$(DC) exec -e APP_ENV=test php ./script/behat.sh
 
 #################################################### MUTATION ##########################################################
 .PHONY: infection
 infection:
-	@$(DC) exec php ./script/infection.sh
+	@$(DC) exec -e APP_ENV=test php ./script/infection.sh
 
 #################################################### COVERAGE ##########################################################
 .PHONY: coverage
 coverage:
-	@$(DC) exec php ./script/coverage.sh
+	@$(DC) exec -e APP_ENV=test php ./script/coverage.sh

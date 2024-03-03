@@ -31,6 +31,9 @@ final class UuidTest extends TestCase
         Uuid::generate($value, $namespace);
     }
 
+    /**
+     * @return array<int, array<int, string|null>>
+     */
     public static function uuidGenerationDataProvider(): array
     {
         return [

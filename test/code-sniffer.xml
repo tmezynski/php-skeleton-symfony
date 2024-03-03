@@ -74,8 +74,6 @@
 
     <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
 
-    <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
-
     <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
     <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
     <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
@@ -98,45 +96,6 @@
     <rule ref="MySource.PHP.GetRequestData"/>
 
     <rule ref="MySource.Strings.JoinStrings"/>
-
-    <rule ref="PEAR.Classes.ClassDeclaration"/>
-
-    <rule ref="PEAR.ControlStructures.ControlSignature"/>
-    <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
-
-    <rule ref="PEAR.Files.IncludingFile"/>
-
-    <rule ref="PEAR.Formatting.MultiLineAssignment"/>
-
-    <rule ref="PEAR.Functions.FunctionDeclaration"/>
-    <rule ref="PEAR.Functions.ValidDefaultValue"/>
-
-    <rule ref="PEAR.NamingConventions.ValidClassName"/>
-    <rule ref="PEAR.NamingConventions.ValidFunctionName">
-        <exclude name="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/>
-    </rule>
-
-    <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
-    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
-
-    <rule ref="PSR1.Classes.ClassDeclaration"/>
-    <rule ref="PSR1.Files.SideEffects"/>
-    <rule ref="PSR1.Methods.CamelCapsMethodName"/>
-
-    <rule ref="PSR2.Classes.ClassDeclaration"/>
-    <rule ref="PSR2.Classes.PropertyDeclaration">
-        <exclude name="PSR2.Classes.PropertyDeclaration.SpacingAfterType"/>
-    </rule>
-    <rule ref="PSR2.ControlStructures.ControlStructureSpacing"/>
-    <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
-    <rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
-    <rule ref="PSR2.Files.ClosingTag"/>
-    <rule ref="PSR2.Files.EndFileNewline"/>
-    <rule ref="PSR2.Methods.FunctionCallSignature"/>
-    <rule ref="PSR2.Methods.FunctionClosingBrace"/>
-    <rule ref="PSR2.Methods.MethodDeclaration"/>
-    <rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
-    <rule ref="PSR2.Namespaces.UseDeclaration"/>
 
     <rule ref="PSR12.Classes.AnonClassDeclaration"/>
     <rule ref="PSR12.Classes.ClassInstantiation"/>

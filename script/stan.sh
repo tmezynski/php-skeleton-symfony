@@ -5,7 +5,7 @@ php \
     -d xdebug.mode=off \
     -d pcov.enable=0 \
   vendor/bin/phpstan analyse \
-    -c test/.config/stan.neon \
+    -c test/stan.neon \
     --no-progress\
     --no-interaction \
     --no-ansi

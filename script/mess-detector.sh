@@ -6,4 +6,4 @@ php \
     -d pcov.enable=0 \
   vendor/bin/phpmd src text \
     --exclude=src/Kernel.php \
-    ./test/.config/mess-detector.xml
+    ./test/mess-detector.xml
