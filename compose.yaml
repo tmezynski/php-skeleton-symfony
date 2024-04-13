@@ -1,0 +1,53 @@
+services:
+  nginx:
+    image: nginx:stable-alpine3.17
+    hostname: skeleton_nginx
+    restart: unless-stopped
+    volumes:
+      - ./build/nginx/dev.conf:/etc/nginx/nginx.conf
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: .
+      target: development
+    hostname: skeleton_php
+    restart: unless-stopped
+    user: ${USER_ID}:${GROUP_ID}
+    volumes:
+      - ./:/app
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:16-alpine
+    hostname: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=skeleton
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./build/psql/init-db.sh:/docker-entrypoint-initdb.d/init-database.sh
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+  redis:
+    image: redis:7.2-alpine
+    hostname: skeleton_redis
+    restart: unless-stopped
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    hostname: skeleton_redis_commander
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:skeleton_redis:6379
+    ports:
+      - '${REDIS_COMMANDER_HTTP_PORT:-8081}:8081'

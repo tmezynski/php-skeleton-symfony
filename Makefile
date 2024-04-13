@@ -1,17 +1,17 @@
-DC = USER_ID=$(shell id -u) GROUP_ID=$(shell id -g) docker-compose -f ./docker/docker-compose.yml
+DC = USER_ID=$(shell id -u) GROUP_ID=$(shell id -g) docker-compose -f ./compose.yaml
 
 ########################################################################################################################
 ################################################## DEV TOOLS ###########################################################
 ########################################################################################################################
 .PHONY: create
-create: images init
+create: build init
 
-.PHONY: images
-images:
+.PHONY: build
+build:
 	@$(DC) build
 
-.PHONY: images-force
-images-force:
+.PHONY: build-force
+build-force:
 	@$(DC) build --no-cache
 
 .PHONY: up
@@ -30,81 +30,76 @@ destroy:
 init: up
 	@$(DC) exec redis redis-cli flushall
 	@$(DC) exec php composer install
-	@$(MAKE) migrations
 
-.PHONY: console
-console:
+.PHONY: shell
+shell:
 	@$(DC) exec php sh
 
 ################################################### DATABASE ###########################################################
 .PHONY: migrations
 migrations:
-	@$(DC) exec php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
-	@$(DC) exec -e APP_ENV=test php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+	@$(DC) exec php composer migrations
 
-.PHONY: create-migration
-create-migration:
-	@$(DC) exec php bin/console doctrine:migrations:generate --no-interaction
+.PHONY: migration
+migration:
+	@$(DC) exec php composer migration
 
 .PHONY: clear-cache
 clear-cache:
-	@$(DC) exec php rm -rf var/cache
+	@$(DC) exec php composer cache:clear
 
 ########################################################################################################################
 #################################################### TESTS #############################################################
 ########################################################################################################################
 .PHONY: test
-test: static unit integration acceptance
+test: test-stan test-unit test-integration test-acceptance
 
 #################################################### STATIC ############################################################
-.PHONY: static
-static: stan code-sniffer mess-detector magic-numbers deptrac
+.PHONY: test-stan
+test-stan:
+	@$(DC) exec php composer test:stan
 
-.PHONY: stan
-stan:
-	@$(DC) exec -e APP_ENV=test php ./script/stan.sh
+.PHONY: test-code-sniffer
+test-code-sniffer:
+	@$(DC) exec php composer test:code-sniffer
 
-.PHONY: code-sniffer
-code-sniffer:
-	@$(DC) exec -e APP_ENV=test php ./script/code-sniffer.sh
+.PHONY: test-code-sniffer-fix
+test-code-sniffer-fix:
+	@$(DC) exec php composer test:code-sniffer-fix
 
-.PHONY: code-sniffer-fix
-code-sniffer-fix:
-	@$(DC) exec -e APP_ENV=test php ./script/code-sniffer-fix.sh
+.PHONY: test-mess-detector
+test-mess-detector:
+	@$(DC) exec php composer test:mess-detector
 
-.PHONY: mess-detector
-mess-detector:
-	@$(DC) exec -e APP_ENV=test php ./script/mess-detector.sh
+.PHONY: test-magic-numbers
+test-magic-numbers:
+	@$(DC) exec php composer test:magic-numbers-detection
 
-.PHONY: magic-numbers
-magic-numbers:
-	@$(DC) exec -e APP_ENV=test php ./script/magic-number-detection.sh
-
-.PHONY: deptrac
-deptrac:
-	@$(DC) exec -e APP_ENV=test php ./script/deptrac.sh
+.PHONY: test-deptrac
+test-deptrac:
+	@$(DC) exec php composer test:deptrac
 
 ##################################################### UNIT #############################################################
-.PHONY: unit
-unit:
-	@$(DC) exec -e APP_ENV=test php ./script/unit.sh
+.PHONY: test-unit
+test-unit:
+	@$(DC) exec php composer test:unit
 
 ################################################## INTEGRATION #########################################################
-.PHONY: integration
-integration:
-	@$(DC) exec -e APP_ENV=test php ./script/integration.sh
+.PHONY: test-integration
+test-integration:
+	@$(DC) exec php composer test:integration
 
 ################################################### ACCEPTANCE #########################################################
-.PHONY: acceptance
-acceptance:
-	@$(DC) exec -e APP_ENV=test php ./script/behat.sh
+.PHONY: test-acceptance
+test-acceptance:
+	@$(DC) exec php composer test:acceptance
 
 #################################################### MUTATION ##########################################################
-.PHONY: infection
-infection:
-	@$(DC) exec -e APP_ENV=test php ./script/infection.sh
+.PHONY: test-mutation
+test-mutation:
+	@$(DC) exec php composer test:mutation
 
 #################################################### COVERAGE ##########################################################
-.PHONY: coverage
-coverage:
-	@$(DC) exec -e APP_ENV=test php ./script/coverage.sh
+.PHONY: test-coverage
+test-coverage:
+	@$(DC) exec php composer test:coverage

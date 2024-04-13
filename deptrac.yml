@@ -1,26 +1,35 @@
 parameters:
   paths:
-    - ../src
+    - src
   layers:
     - name: SharedDomain
       collectors:
-        -
-          type: directory
+        - type: directory
           value: src/SharedKernel/Domain/*
     - name: SharedApplication
       collectors:
-        -
-          type: directory
+        - type: directory
           value: src/SharedKernel/Application/*
     - name: SharedInfrastructure
       collectors:
-        -
-          type: directory
+        - type: directory
           value: src/SharedKernel/Infrastructure/*
+    - name: Symfony
+      collectors:
+        - type: className
+          regex: ^(Symfony|Doctrine|Psr)\\.*
+    - name: Utils
+      collectors:
+        - type: className
+          regex: ^(Ramsey|Brick|Webmozart)\\.*
+
   ruleset:
-    SharedDomain: ~
+    SharedDomain:
+      - Utils
     SharedApplication:
       - SharedDomain
     SharedInfrastructure:
       - SharedDomain
       - SharedApplication
+      - Symfony
+      - Utils
