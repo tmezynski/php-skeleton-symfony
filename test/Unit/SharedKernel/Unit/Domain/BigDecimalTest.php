@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SharedKernel\Unit\Domain;
+namespace Unit\SharedKernel\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use SharedKernel\Domain\BigDecimal;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Integration;
+namespace Integration;
 
 use Doctrine\DBAL\Connection;
 use SharedKernel\Application\ClockInterface;
