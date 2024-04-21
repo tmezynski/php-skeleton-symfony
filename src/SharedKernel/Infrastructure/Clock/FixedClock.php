@@ -19,7 +19,7 @@ final class FixedClock implements ClockInterface
         return $this->now;
     }
 
-    public function travelTo(DateTimeInterface $dateTime): void
+    public function set(DateTimeInterface $dateTime): void
     {
         $this->now = $dateTime;
     }

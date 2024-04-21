@@ -25,6 +25,6 @@ final class TimeContext implements Context
             throw new RuntimeException('Clock must be an instance of FixedClock');
         }
 
-        $this->clock->travelTo(new DateTimeImmutable($dateTime));
+        $this->clock->set(new DateTimeImmutable($dateTime));
     }
 }
