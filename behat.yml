@@ -3,9 +3,9 @@ default:
     default:
       paths: [ '%paths.base%/test/Acceptance' ]
       contexts:
-        - Test\Utils\Context\DatabaseContext
-        - Test\Utils\Context\TimeContext
-        - Test\Utils\Context\DemoContext
+        - Utils\Context\DatabaseContext
+        - Utils\Context\TimeContext
+        - Utils\Context\DemoContext
 
   formatters:
     pretty:

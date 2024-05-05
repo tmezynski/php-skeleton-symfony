@@ -52,7 +52,7 @@ clear-cache:
 #################################################### TESTS #############################################################
 ########################################################################################################################
 .PHONY: test
-test: test-stan test-unit test-integration test-acceptance
+test: test-stan test-code-sniffer test-mess-detector test-magic-numbers test-deptrac test-unit test-integration test-acceptance
 
 #################################################### STATIC ############################################################
 .PHONY: test-stan

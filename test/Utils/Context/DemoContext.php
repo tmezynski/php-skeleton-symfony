@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Test\Utils\Context;
+namespace Utils\Context;
 
 use Behat\Behat\Context\Context;
-use Test\Utils\Dsl\Request\TestRequest;
+use Utils\Dsl\Request\TestRequest;
 
 final class DemoContext implements Context
 {

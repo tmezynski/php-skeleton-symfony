@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use SharedKernel\Infrastructure\Messenger\Message\AsyncMessageInterface;
-use SharedKernel\Infrastructure\Messenger\Message\SyncMessageInterface;
+use SharedKernel\Application\Message\AsyncMessageInterface;
+use SharedKernel\Application\Message\SyncMessageInterface;
 use SharedKernel\Infrastructure\Messenger\MessageSerializer;
 use SharedKernel\Infrastructure\Messenger\UnlimitedRetryStrategy;
 use Symfony\Config\FrameworkConfig;

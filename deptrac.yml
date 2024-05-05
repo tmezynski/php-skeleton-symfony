@@ -14,6 +14,10 @@ parameters:
       collectors:
         - type: directory
           value: src/SharedKernel/Infrastructure/*
+    - name: SharedUserInterface
+      collectors:
+        - type: directory
+          value: src/SharedKernel/UserInterface/*
     - name: Symfony
       collectors:
         - type: className
@@ -33,3 +37,6 @@ parameters:
       - SharedApplication
       - Symfony
       - Utils
+    SharedUserInterface:
+      - SharedApplication
+      - Symfony
