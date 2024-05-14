@@ -6,7 +6,7 @@ namespace SharedKernel\Application;
 
 use DateTimeInterface;
 
-interface ClockInterface
+interface Clock
 {
     public function now(): DateTimeInterface;
 }

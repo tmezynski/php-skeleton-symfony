@@ -6,6 +6,9 @@ namespace Integration;
 
 use DateTimeImmutable;
 
+/**
+ * @coversNothing
+ */
 final class DummyTest extends IntegrationTestCase
 {
     public function testDummy(): void

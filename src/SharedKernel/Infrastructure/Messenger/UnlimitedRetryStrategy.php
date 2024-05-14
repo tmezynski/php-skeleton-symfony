@@ -23,7 +23,7 @@ final class UnlimitedRetryStrategy implements RetryStrategyInterface
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getWaitingTime(Envelope $message, ?Throwable $throwable = null): int //phpcs:ignore
+    public function getWaitingTime(Envelope $message, ?Throwable $throwable = null): int
     {
         return self::DELAY_MILLISECONDS;
     }

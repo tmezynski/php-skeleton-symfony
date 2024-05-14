@@ -7,12 +7,12 @@ namespace Utils\Context;
 use Behat\Behat\Context\Context;
 use DateTimeImmutable;
 use RuntimeException;
-use SharedKernel\Application\ClockInterface;
+use SharedKernel\Application\Clock;
 use SharedKernel\Infrastructure\Clock\FixedClock;
 
 final class TimeContext implements Context
 {
-    public function __construct(private readonly ClockInterface $clock)
+    public function __construct(private readonly Clock $clock)
     {
     }
 

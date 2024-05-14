@@ -6,6 +6,8 @@ namespace SharedKernel\Domain;
 
 enum Currency: string
 {
+    use EnumTrait;
+
     case AED = 'UAE Dirham';
     case AFN = 'Afghani';
     case ALL = 'Lek';
@@ -176,7 +178,7 @@ enum Currency: string
     /**
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function fraction(): int //phpcs:ignore
+    public function fraction(): int
     {
         return match ($this) {
             self::AED => 2,
@@ -344,7 +346,7 @@ enum Currency: string
             self::ZAR => 2,
             self::ZMW => 2,
             self::ZWL => 2,
-            default => 0
+            default => 0,
         };
     }
 }

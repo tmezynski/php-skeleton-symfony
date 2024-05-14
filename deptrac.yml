@@ -6,22 +6,27 @@ parameters:
       collectors:
         - type: directory
           value: src/SharedKernel/Domain/*
+
     - name: SharedApplication
       collectors:
         - type: directory
           value: src/SharedKernel/Application/*
+
     - name: SharedInfrastructure
       collectors:
         - type: directory
           value: src/SharedKernel/Infrastructure/*
+
     - name: SharedUserInterface
       collectors:
         - type: directory
           value: src/SharedKernel/UserInterface/*
+
     - name: Symfony
       collectors:
         - type: className
           regex: ^(Symfony|Doctrine|Psr)\\.*
+
     - name: Utils
       collectors:
         - type: className

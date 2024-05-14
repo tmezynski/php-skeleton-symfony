@@ -28,11 +28,11 @@ destroy:
 
 .PHONY: init
 init: up
-	@$(DC) exec redis redis-cli flushall
 	@$(DC) exec php composer install
+	@$(MAKE) migrations-test
 
-.PHONY: shell
-shell:
+.PHONY: sh
+sh:
 	@$(DC) exec php sh
 
 ################################################### DATABASE ###########################################################
@@ -40,36 +40,36 @@ shell:
 migrations:
 	@$(DC) exec php composer migrations
 
-.PHONY: migration
-migration:
-	@$(DC) exec php composer migration
+.PHONY: migrations-test
+migrations-test:
+	@$(DC) exec php composer migrations-test
 
-.PHONY: clear-cache
-clear-cache:
+.PHONY: cc
+cc:
 	@$(DC) exec php composer cache:clear
+	@rm -rf var/cache/*
 
 ########################################################################################################################
 #################################################### TESTS #############################################################
 ########################################################################################################################
 .PHONY: test
-test: test-stan test-code-sniffer test-mess-detector test-magic-numbers test-deptrac test-unit test-integration test-acceptance
+test: test-static test-unit test-integration test-behat
 
 #################################################### STATIC ############################################################
+.PHONY: test-static
+test-static: test-stan test-cs-fixer test-magic-numbers test-deptrac
+
 .PHONY: test-stan
 test-stan:
-	@$(DC) exec php composer test:stan
+	@$(DC) exec php composer test:php-stan
 
-.PHONY: test-code-sniffer
-test-code-sniffer:
-	@$(DC) exec php composer test:code-sniffer
+.PHONY: test-cs-fixer
+test-cs-fixer:
+	@$(DC) exec php composer test:cs-fixer
 
-.PHONY: test-code-sniffer-fix
-test-code-sniffer-fix:
-	@$(DC) exec php composer test:code-sniffer-fix
-
-.PHONY: test-mess-detector
-test-mess-detector:
-	@$(DC) exec php composer test:mess-detector
+.PHONY: fix-static
+fix-static:
+	@$(DC) exec php composer test:cs-fixer:fix
 
 .PHONY: test-magic-numbers
 test-magic-numbers:
@@ -89,10 +89,10 @@ test-unit:
 test-integration:
 	@$(DC) exec php composer test:integration
 
-################################################### ACCEPTANCE #########################################################
-.PHONY: test-acceptance
-test-acceptance:
-	@$(DC) exec php composer test:acceptance
+##################################################### BEHAT ############################################################
+.PHONY: test-behat
+test-behat:
+	@$(DC) exec php composer test:behat
 
 #################################################### MUTATION ##########################################################
 .PHONY: test-mutation

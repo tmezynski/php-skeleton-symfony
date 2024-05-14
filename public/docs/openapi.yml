@@ -1,0 +1,94 @@
+openapi: "3.0.0"
+info:
+    version: "0.0.1"
+    description: "API documentation"
+    title: "Skeleton API"
+    contact:
+        name: "Tomasz Mężyński"
+servers:
+    - url: http://localhost:8080
+      description: Docker
+
+security:
+    - someAuth: [ ]
+
+paths:
+    /health-check:
+        get:
+            summary: Health check
+            description: Health check
+            responses:
+                200:
+                    $ref: '#/components/responses/Ok'
+
+components:
+    securitySchemes:
+        someAuth:
+            type: apiKey
+            in: header
+            name: X-AUTH-TOKEN
+
+    responses:
+        Ok:
+            description: 200 Ok
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Message'
+                    example:
+                        message: "Ok"
+        Created:
+            description: 201 Created
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Message'
+                    example:
+                        message: "Resource has been created"
+        Updated:
+            description: 204 No content
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Message'
+                    example:
+                        message: "Resource has been updated"
+        Unauthorized:
+            description: 401 Unauthorized
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Message'
+                    example:
+                        message: "Access denied"
+        NotFound:
+            description: 404 Not found
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Message'
+                    example:
+                        message: "Resource does not exists"
+        Conflict:
+            description: 409 Conflict
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Message'
+                    example:
+                        message: "Resource already exists"
+        Unprocessable:
+            description: 422 Unprocessable
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Message'
+                    example:
+                        message: "Parameter is mandatory"
+    schemas:
+        Message:
+            type: object
+            description: message
+            properties:
+                message:
+                    type: string

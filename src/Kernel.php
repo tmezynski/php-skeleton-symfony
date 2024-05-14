@@ -17,7 +17,7 @@ final class Kernel extends BaseKernel
     protected function configureContainer(
         ContainerConfigurator $container,
         LoaderInterface $loader,
-        ContainerBuilder $builder
+        ContainerBuilder $builder,
     ): void {
         $configDir = $this->getConfigDir();
 

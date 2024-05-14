@@ -6,76 +6,95 @@ namespace SharedKernel\Domain;
 
 use InvalidArgumentException;
 
-final class Money
+final readonly class Money
 {
-    private function __construct(private readonly BigDecimal $amount, private readonly Currency $currency)
+    public function __construct(private Amount $amount, private Currency $currency)
     {
     }
 
-    public static function create(float $amount, Currency $currency): self
+    public function add(Money $other): Money
     {
-        return new self(new BigDecimal($amount, $currency->fraction()), $currency);
+        $this->assertSameCurrency($other);
+
+        return new self($this->amount->add($other->amount), $this->currency);
     }
 
-    public function add(self $money): self
+    public function sub(Money $other): Money
     {
-        $this->assertSameCurrency($money);
+        $this->assertSameCurrency($other);
 
-        return new self(
-            $this->amount->add($money->amount),
-            $this->currency
-        );
+        return new self($this->amount->sub($other->amount), $this->currency);
     }
 
-    public function sub(self $money): self
+    public function mul(Amount $multiplier): Money
     {
-        $this->assertSameCurrency($money);
-
-        return new self(
-            $this->amount->sub($money->amount),
-            $this->currency
-        );
+        return new self($this->amount->mul($multiplier), $this->currency);
     }
 
-    public function mul(float $multiplier): self
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function div(Amount $divisor): Money
     {
-        return new self(
-            $this->amount->mul($multiplier),
-            $this->currency
-        );
+        return new self($this->amount->div($divisor), $this->currency);
     }
 
-    public function div(float $divider): self
+    public function round(?int $precision = null): Money
     {
-        return new self(
-            $this->amount->div($divider),
-            $this->currency
-        );
-    }
-
-    public function round(): self
-    {
-        return new self($this->amount->round($this->currency->fraction()), $this->currency);
-    }
-
-    private function assertSameCurrency(self $money): void
-    {
-        if ($this->currency === $money->currency) {
-            return;
+        if (is_null($precision)) {
+            $precision = $this->currency->fraction();
         }
 
-        throw new InvalidArgumentException(
-            sprintf('Expected currency %s, got %s', $this->currency->name, $money->currency->name)
+        return new self($this->amount->round($precision), $this->currency);
+    }
+
+    public function equals(Money $other): bool
+    {
+        return $this->amount->equals($other->amount)
+            && $this->currency === $other->currency;
+    }
+
+    public function equalsRounded(Money $other): bool
+    {
+        return $this->round()->amount->equals($other->round()->amount)
+            && $this->currency === $other->currency;
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function assertSameCurrency(Money $other): void
+    {
+        if ($this->currency !== $other->currency) {
+            throw new InvalidArgumentException('Currencies must match');
+        }
+    }
+
+    public function __toString(): string
+    {
+        return sprintf(
+            '%s %s',
+            $this->amount->round($this->currency->fraction()),
+            $this->currency->name,
         );
     }
 
-    public function amount(): string
+    /**
+     * @return array{'amount': string, 'currency': string}
+     */
+    public function toMemento(): array
     {
-        return (string)$this->amount;
+        return [
+            'amount' => (string)$this->amount,
+            'currency' => $this->currency->name,
+        ];
     }
 
-    public function currency(): string
+    /**
+     * @param array{'amount': string, 'currency': string} $data
+     */
+    public static function fromMemento(array $data): self
     {
-        return $this->currency->name;
+        return new self(new Amount($data['amount']), Currency::fromName($data['currency']));
     }
 }

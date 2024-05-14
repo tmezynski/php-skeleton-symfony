@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace SharedKernel\Infrastructure\Clock;
 
 use DateTimeImmutable;
-use SharedKernel\Application\ClockInterface;
+use SharedKernel\Application\Clock;
 
-final class FixedClock implements ClockInterface
+final class FixedClock implements Clock
 {
     public function __construct(private DateTimeImmutable $now = new DateTimeImmutable())
     {

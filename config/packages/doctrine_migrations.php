@@ -18,8 +18,8 @@ return static function (DoctrineMigrationsConfig $doctrineMigration): void {
         ->executionTimeColumnName('execution_time');
 
     $doctrineMigration->migrationsPath(
-        'SharedKernel\Infrastructure\Messenger\Migration\PostgreSql',
-        '%kernel.project_dir%/src/SharedKernel/Infrastructure/Messenger/Migration/PostgreSql'
+        'SharedKernel\Infrastructure\Migration\PostgreSql',
+        '%kernel.project_dir%/src/SharedKernel/Infrastructure/Migration/PostgreSql',
     );
 
     $doctrineMigration

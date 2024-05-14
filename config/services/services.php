@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use SharedKernel\Application\ClockInterface;
+use SharedKernel\Application\Clock;
 use SharedKernel\Infrastructure\Clock\SystemClock;
 
-//@formatter:off
+// @formatter:off
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services
-        ->set(ClockInterface::class)
+        ->set(Clock::class)
         ->class(SystemClock::class);
 };

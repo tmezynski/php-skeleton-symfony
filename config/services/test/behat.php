@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use SharedKernel\Application\ClockInterface;
+use SharedKernel\Application\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Context\DatabaseContext;
 use Utils\Context\DemoContext;
@@ -18,14 +18,14 @@ return static function (ContainerConfigurator $container): void {
         ->defaults()
         ->autoconfigure();
 
-    //Contexts
+    // Contexts
     $services
         ->set(DatabaseContext::class)
         ->args([service('doctrine.dbal.db_connection')]);
 
     $services
         ->set(TimeContext::class)
-        ->args([service(ClockInterface::class)]);
+        ->args([service(Clock::class)]);
 
     $services
         ->set(DemoContext::class)

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use SharedKernel\Application\Message\AsyncMessageInterface;
-use SharedKernel\Application\Message\SyncMessageInterface;
+use SharedKernel\Application\Message\AsyncMessage;
+use SharedKernel\Application\Message\SyncMessage;
 use SharedKernel\Infrastructure\Messenger\MessageSerializer;
 use SharedKernel\Infrastructure\Messenger\UnlimitedRetryStrategy;
 use Symfony\Config\FrameworkConfig;
@@ -41,10 +41,10 @@ return static function (FrameworkConfig $framework): void {
 
     // Routing
     $messenger
-        ->routing(SyncMessageInterface::class)
+        ->routing(SyncMessage::class)
         ->senders(['db_log', 'sync']);
 
     $messenger
-        ->routing(AsyncMessageInterface::class)
+        ->routing(AsyncMessage::class)
         ->senders(['db_log', 'db']);
 };

@@ -8,7 +8,7 @@ use Symfony\Config\DoctrineConfig;
 
 // @formatter:off
 return static function (DoctrineConfig $doctrine): void {
-    //DBAL
+    // DBAL
     $doctrine
         ->dbal()
         ->connection('db')
@@ -20,7 +20,7 @@ return static function (DoctrineConfig $doctrine): void {
         ->serverVersion(env('DB_SERVER_VERSION'))
         ->driver(env('DB_DRIVER'));
 
-    //ORM
+    // ORM
     $doctrine
         ->orm()
         ->autoGenerateProxyClasses(false)
