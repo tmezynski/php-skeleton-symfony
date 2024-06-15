@@ -1,7 +1,7 @@
 default:
   suites:
     default:
-      paths: [ '%paths.base%/test/Acceptance' ]
+      paths: [ '%paths.base%/test/Behat' ]
       contexts:
         - Utils\Context\DatabaseContext
         - Utils\Context\TimeContext

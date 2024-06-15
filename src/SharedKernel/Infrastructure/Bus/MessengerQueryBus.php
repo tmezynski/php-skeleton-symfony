@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SharedKernel\Infrastructure\QueryBus;
+namespace SharedKernel\Infrastructure\Bus;
 
 use Exception;
 use SharedKernel\Application\Bus\QueryBus;
+use SharedKernel\Application\Bus\QueryResult;
 use SharedKernel\Application\Query\AsyncQuery;
-use SharedKernel\Application\Query\QueryResult;
 use SharedKernel\Application\Query\SyncQuery;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;

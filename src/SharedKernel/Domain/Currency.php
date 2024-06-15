@@ -175,9 +175,6 @@ enum Currency: string
     case ZMW = 'Zambian Kwacha';
     case ZWL = 'Zimbabwe Dollar';
 
-    /**
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-     */
     public function fraction(): int
     {
         return match ($this) {

@@ -57,7 +57,7 @@ test: test-static test-unit test-integration test-behat
 
 #################################################### STATIC ############################################################
 .PHONY: test-static
-test-static: test-stan test-cs-fixer test-magic-numbers test-deptrac
+test-static: test-stan test-cs-fixer test-deptrac
 
 .PHONY: test-stan
 test-stan:
@@ -70,10 +70,6 @@ test-cs-fixer:
 .PHONY: fix-static
 fix-static:
 	@$(DC) exec php composer test:cs-fixer:fix
-
-.PHONY: test-magic-numbers
-test-magic-numbers:
-	@$(DC) exec php composer test:magic-numbers-detection
 
 .PHONY: test-deptrac
 test-deptrac:

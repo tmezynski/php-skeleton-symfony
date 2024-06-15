@@ -1,195 +1,95 @@
 name: CI
 
-on: [ push, pull_request ]
+on:
+    push:
+        paths:
+            - '**.php'
+            - '**.yml'
+    pull_request:
+        paths:
+            - '**.php'
+            - '**.yml'
 
 jobs:
     build:
+        name: Build project
         runs-on: ubuntu-latest
-        env:
-            APP_ENV: test
         steps:
-            -   name: Branch checkout
+            -   name: Checkout branch
                 uses: actions/checkout@v4
-
-            -   name: Set up PHP
-                uses: shivammathur/setup-php@v2
+            -   name: Project setup
+                uses: ./.github/actions/common
                 with:
-                    php-version: '8.3'
-
-            -   name: Load .env
-                uses: aarcangeli/load-dotenv@v1.0.0
-                with:
-                    filenames: |
-                        .env
-                        .env.${{ env.APP_ENV }}
-
-            -   name: Cache composer dependencies
-                uses: actions/cache@v3
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-
-            -   name: Cache symfony
-                uses: actions/cache@v3
-                with:
-                    path: var/cache/test
-                    key: ${{ runner.os }}-symfony-${{ github.run_id }}
-
-            -   name: Setup project
+                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
+                    SYMFONY_CACHE: ${{ github.run_id }}
+            -   name: Build project
                 run: |
                     composer install --optimize-autoloader --no-scripts --no-progress --quiet
                     bin/console cache:warmup
-
-    php-stan:
+    phpstan:
+        name: PHPStan
         runs-on: ubuntu-latest
         needs: build
-        env:
-            APP_ENV: test
         steps:
-            -   name: Branch checkout
+            -   name: Checkout branch
                 uses: actions/checkout@v4
-
-            -   name: Set up PHP
-                uses: shivammathur/setup-php@v2
+            -   name: Project setup
+                uses: ./.github/actions/common
                 with:
-                    php-version: '8.3'
-
-            -   name: Load .env
-                uses: aarcangeli/load-dotenv@v1.0.0
-                with:
-                    filenames: |
-                        .env
-                        .env.${{ env.APP_ENV }}
-
-            -   name: Cache composer dependencies
-                uses: actions/cache@v3
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-
-            -   name: Cache symfony
-                uses: actions/cache@v3
-                with:
-                    path: var/cache
-                    key: ${{ runner.os }}-cache-${{ github.run_id }}
-
-            -   name: Run php stan
+                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
+                    SYMFONY_CACHE: ${{ github.run_id }}
+            -   name: Run phpstan
                 run: composer test:php-stan
 
-    cs-fixer:
+    csfixer:
+        name: CSFixer
         runs-on: ubuntu-latest
         needs: build
-        env:
-            APP_ENV: test
         steps:
-            -   name: Branch checkout
+            -   name: Checkout branch
                 uses: actions/checkout@v4
-
-            -   name: Set up PHP
-                uses: shivammathur/setup-php@v2
+            -   name: Project setup
+                uses: ./.github/actions/common
                 with:
-                    php-version: '8.3'
-
-            -   name: Load .env
-                uses: aarcangeli/load-dotenv@v1.0.0
-                with:
-                    filenames: |
-                        .env
-                        .env.${{ env.APP_ENV }}
-
-            -   name: Cache composer dependencies
-                uses: actions/cache@v3
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-
-            -   name: Cache symfony
-                uses: actions/cache@v3
-                with:
-                    path: var/cache
-                    key: ${{ runner.os }}-cache-${{ github.run_id }}
-
-            -   name: Run cs fixer
+                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
+                    SYMFONY_CACHE: ${{ github.run_id }}
+            -   name: Run cs-fixer
                 run: composer test:cs-fixer
 
     deptrac:
+        name: Deptrac
         runs-on: ubuntu-latest
         needs: build
-        env:
-            APP_ENV: test
         steps:
-            -   name: Branch checkout
+            -   name: Checkout branch
                 uses: actions/checkout@v4
-
-            -   name: Set up PHP
-                uses: shivammathur/setup-php@v2
+            -   name: Project setup
+                uses: ./.github/actions/common
                 with:
-                    php-version: '8.3'
-
-            -   name: Load .env
-                uses: aarcangeli/load-dotenv@v1.0.0
-                with:
-                    filenames: |
-                        .env
-                        .env.${{ env.APP_ENV }}
-
-            -   name: Cache composer dependencies
-                uses: actions/cache@v3
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-
-            -   name: Cache symfony
-                uses: actions/cache@v3
-                with:
-                    path: var/cache
-                    key: ${{ runner.os }}-cache-${{ github.run_id }}
-
+                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
+                    SYMFONY_CACHE: ${{ github.run_id }}
             -   name: Run deptrac
                 run: composer test:deptrac
 
     unit:
+        name: Unit tests
         runs-on: ubuntu-latest
-        needs: [ php-stan, cs-fixer, deptrac ]
-        env:
-            APP_ENV: test
+        needs: [ phpstan, csfixer, deptrac ]
         steps:
-            -   name: Branch checkout
+            -   name: Checkout branch
                 uses: actions/checkout@v4
-
-            -   name: Load .env
-                uses: aarcangeli/load-dotenv@v1.0.0
+            -   name: Project setup
+                uses: ./.github/actions/common
                 with:
-                    filenames: |
-                        .env
-                        .env.${{ env.APP_ENV }}
-
-            -   name: Set up PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: '8.3'
-
-            -   name: Cache composer dependencies
-                uses: actions/cache@v3
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-
-            -   name: Cache symfony
-                uses: actions/cache@v3
-                with:
-                    path: var/cache
-                    key: ${{ runner.os }}-cache-${{ github.run_id }}
-
-            -   name: Setup project
-                run: composer migrations
-
+                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
+                    SYMFONY_CACHE: ${{ github.run_id }}
             -   name: Unit tests
                 run: composer test:unit
 
     integration:
+        name: Integration tests
         runs-on: ubuntu-latest
-        needs: [ php-stan, cs-fixer, deptrac ]
+        needs: [ phpstan, csfixer, deptrac ]
         services:
             postgres:
                 image: postgres
@@ -204,46 +104,21 @@ jobs:
                     --health-retries 20
                 ports:
                     - 5432:5432
-        env:
-            APP_ENV: test
-            DB_HOST: localhost
         steps:
-            -   name: Branch checkout
+            -   name: Checkout branch
                 uses: actions/checkout@v4
-
-            -   name: Load .env
-                uses: aarcangeli/load-dotenv@v1.0.0
+            -   name: Project setup
+                uses: ./.github/actions/db
                 with:
-                    filenames: |
-                        .env
-                        .env.${{ env.APP_ENV }}
-
-            -   name: Set up PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: '8.3'
-
-            -   name: Cache composer dependencies
-                uses: actions/cache@v3
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-
-            -   name: Cache symfony
-                uses: actions/cache@v3
-                with:
-                    path: var/cache
-                    key: ${{ runner.os }}-cache-${{ github.run_id }}
-
-            -   name: Setup project
-                run: composer migrations
-
+                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
+                    SYMFONY_CACHE: ${{ github.run_id }}
             -   name: Integration tests
                 run: composer test:integration
 
     behat:
+        name: Behat tests
         runs-on: ubuntu-latest
-        needs: [ php-stan, cs-fixer, deptrac ]
+        needs: [ phpstan, csfixer, deptrac ]
         services:
             postgres:
                 image: postgres
@@ -258,39 +133,13 @@ jobs:
                     --health-retries 20
                 ports:
                     - 5432:5432
-        env:
-            APP_ENV: test
-            DB_HOST: localhost
         steps:
-            -   name: Branch checkout
+            -   name: Checkout branch
                 uses: actions/checkout@v4
-
-            -   name: Load .env
-                uses: aarcangeli/load-dotenv@v1.0.0
+            -   name: Project setup
+                uses: ./.github/actions/db
                 with:
-                    filenames: |
-                        .env
-                        .env.${{ env.APP_ENV }}
-
-            -   name: Set up PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: '8.3'
-
-            -   name: Cache composer dependencies
-                uses: actions/cache@v3
-                with:
-                    path: vendor
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-
-            -   name: Cache symfony
-                uses: actions/cache@v3
-                with:
-                    path: var/cache
-                    key: ${{ runner.os }}-cache-${{ github.run_id }}
-
-            -   name: Setup project
-                run: composer migrations
-
+                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
+                    SYMFONY_CACHE: ${{ github.run_id }}
             -   name: Behat tests
                 run: composer test:behat

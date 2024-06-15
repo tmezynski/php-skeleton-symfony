@@ -29,10 +29,8 @@
     "friends-of-behat/symfony-extension": "^2.4",
     "friendsofphp/php-cs-fixer": "^3.58",
     "infection/infection": "^0.27.9",
-    "phpmd/phpmd": "^2.15",
     "phpstan/phpstan": "^1.10",
     "phpunit/phpunit": "^10.5",
-    "povils/phpmnd": "^3.3",
     "qossmic/deptrac-shim": "^1.0"
   },
   "config": {
@@ -90,9 +88,6 @@
     ],
     "test:cs-fixer:fix": [
       "APP_ENV=test php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --diff --allow-risky=yes --quiet"
-    ],
-    "test:magic-numbers-detection": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpmnd --extensions=array,assign,default_parameter,operation,property --include-numeric-string --ignore-numbers=-1,0,1 --ignore-strings='-0','0' --hint --progress -n src"
     ],
     "test:deptrac": [
       "APP_ENV=test php -d xdebug.mode=off vendor/bin/deptrac analyse --config-file=deptrac.yml --cache-file=var/.deptrac.cache --fail-on-uncovered --report-uncovered"
