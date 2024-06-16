@@ -1,0 +1,49 @@
+name: Check code coverage
+
+on:
+    workflow_dispatch:
+        branches:
+            - master
+        paths:
+            - '**.php'
+
+jobs:
+    coverage:
+        name: Update code coverage
+        runs-on: ubuntu-latest
+        services:
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_DB: skeleton_test
+                    POSTGRES_USER: user
+                    POSTGRES_PASSWORD: password
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 3s
+                    --health-timeout 5s
+                    --health-retries 20
+                ports:
+                    - 5432:5432
+        steps:
+            -   name: Checkout branch
+                uses: actions/checkout@v4
+            -   name: Project setup
+                uses: ./.github/actions/common
+                with:
+                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
+                    SYMFONY_CACHE: ${{ github.run_id }}
+            -   name: Build project
+                run: |
+                    composer install --optimize-autoloader --no-scripts --no-progress --quiet
+                    bin/console cache:warmup
+                    composer migrations
+            -   name: Generate coverage report
+                run: composer test:coverage
+            -   name: Make code coverage badge
+                uses: timkrase/phpunit-coverage-badge@v1.2.1
+                with:
+                    report: var/coverage
+                    report_type: html
+                    coverage_badge_path: ./coverage.svg
+                    push_badge: false
