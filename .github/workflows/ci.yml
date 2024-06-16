@@ -12,6 +12,7 @@ on:
 
 jobs:
     build:
+        if: "!contains(github.event.head_commit.message, 'SKIP-CI')"
         name: Build project
         runs-on: ubuntu-latest
         steps:
@@ -48,11 +49,13 @@ jobs:
         steps:
             -   name: Checkout branch
                 uses: actions/checkout@v4
+
             -   name: Project setup
                 uses: ./.github/actions/common
                 with:
                     COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
                     SYMFONY_CACHE: ${{ github.run_id }}
+
             -   name: Run cs-fixer
                 run: composer test:cs-fixer
 
@@ -63,11 +66,13 @@ jobs:
         steps:
             -   name: Checkout branch
                 uses: actions/checkout@v4
+
             -   name: Project setup
                 uses: ./.github/actions/common
                 with:
                     COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
                     SYMFONY_CACHE: ${{ github.run_id }}
+
             -   name: Run deptrac
                 run: composer test:deptrac
 
@@ -78,11 +83,13 @@ jobs:
         steps:
             -   name: Checkout branch
                 uses: actions/checkout@v4
+
             -   name: Project setup
                 uses: ./.github/actions/common
                 with:
                     COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
                     SYMFONY_CACHE: ${{ github.run_id }}
+
             -   name: Unit tests
                 run: composer test:unit
 
@@ -107,11 +114,13 @@ jobs:
         steps:
             -   name: Checkout branch
                 uses: actions/checkout@v4
+
             -   name: Project setup
                 uses: ./.github/actions/db
                 with:
                     COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
                     SYMFONY_CACHE: ${{ github.run_id }}
+
             -   name: Integration tests
                 run: composer test:integration
 
@@ -136,10 +145,12 @@ jobs:
         steps:
             -   name: Checkout branch
                 uses: actions/checkout@v4
+
             -   name: Project setup
                 uses: ./.github/actions/db
                 with:
                     COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
                     SYMFONY_CACHE: ${{ github.run_id }}
+
             -   name: Behat tests
                 run: composer test:behat

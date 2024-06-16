@@ -10,12 +10,14 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use SharedKernel\Domain\Amount;
 use SharedKernel\Domain\Currency;
+use SharedKernel\Domain\EnumTrait;
 use SharedKernel\Domain\Money;
 
 #[
-    CoversClass(Currency::class),
     CoversClass(Money::class),
     CoversClass(Amount::class),
+    CoversClass(Currency::class),
+    CoversClass(EnumTrait::class),
 ]
 final class MoneyTest extends TestCase
 {
