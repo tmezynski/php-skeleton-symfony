@@ -35,7 +35,7 @@
             <directory suffix=".php">src</directory>
         </include>
         <exclude>
-            <directory prefix="Version202" suffix=".php">src</directory>
+            <directory prefix="Version202">src</directory>
             <file>src/Kernel.php</file>
         </exclude>
     </source>

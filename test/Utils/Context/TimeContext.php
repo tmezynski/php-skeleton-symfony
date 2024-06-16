@@ -7,8 +7,8 @@ namespace Utils\Context;
 use Behat\Behat\Context\Context;
 use DateTimeImmutable;
 use RuntimeException;
-use SharedKernel\Application\Clock;
-use SharedKernel\Infrastructure\Clock\FixedClock;
+use Shared\Application\Clock;
+use Shared\Infrastructure\Clock\FixedClock;
 
 final class TimeContext implements Context
 {

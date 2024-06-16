@@ -17,4 +17,4 @@ runs:
                 SYMFONY_CACHE: ${{ github.run_id }}
         -   name: Setup project
             shell: bash
-            run: composer migrations
+            run: composer migrations:migrate

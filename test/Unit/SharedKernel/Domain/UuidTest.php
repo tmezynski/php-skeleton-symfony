@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Unit\SharedKernel\Domain;
+namespace Unit\Shared\Domain;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use SharedKernel\Domain\Uuid;
+use Shared\Domain\Uuid;
 
 #[CoversClass(Uuid::class)]
 final class UuidTest extends TestCase

@@ -38,11 +38,11 @@ sh:
 ################################################### DATABASE ###########################################################
 .PHONY: migrations
 migrations:
-	@$(DC) exec php composer migrations
+	@$(DC) exec php composer migrations:migrate
 
 .PHONY: migrations-test
 migrations-test:
-	@$(DC) exec php composer migrations-test
+	@$(DC) exec php composer migrations:migrate:test
 
 .PHONY: cc
 cc:
@@ -57,19 +57,19 @@ test: test-static test-unit test-integration test-behat
 
 #################################################### STATIC ############################################################
 .PHONY: test-static
-test-static: test-stan test-cs-fixer test-deptrac
-
-.PHONY: test-stan
-test-stan:
-	@$(DC) exec php composer test:php-stan
-
-.PHONY: test-cs-fixer
-test-cs-fixer:
-	@$(DC) exec php composer test:cs-fixer
+test-static: test-phpstan test-csfixer test-deptrac
 
 .PHONY: fix-static
 fix-static:
-	@$(DC) exec php composer test:cs-fixer:fix
+	@$(DC) exec php composer test:csfixer:fix
+
+.PHONY: test-phpstan
+test-phpstan:
+	@$(DC) exec php composer test:phpstan
+
+.PHONY: test-csfixer
+test-csfixer:
+	@$(DC) exec php composer test:csfixer
 
 .PHONY: test-deptrac
 test-deptrac:

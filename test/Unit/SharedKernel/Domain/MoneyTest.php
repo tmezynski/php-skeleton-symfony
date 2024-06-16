@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Unit\SharedKernel\Domain;
+namespace Unit\Shared\Domain;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use SharedKernel\Domain\Amount;
-use SharedKernel\Domain\Currency;
-use SharedKernel\Domain\EnumTrait;
-use SharedKernel\Domain\Money;
+use Shared\Domain\Amount;
+use Shared\Domain\Currency;
+use Shared\Domain\EnumTrait;
+use Shared\Domain\Money;
 
 #[
     CoversClass(Money::class),

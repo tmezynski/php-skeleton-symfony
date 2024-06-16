@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Unit\SharedKernel\Domain;
+namespace Unit\Shared\Domain;
 
 use Generator;
 use InvalidArgumentException;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use SharedKernel\Domain\Amount;
+use Shared\Domain\Amount;
 use Throwable;
 
 #[CoversClass(Amount::class)]

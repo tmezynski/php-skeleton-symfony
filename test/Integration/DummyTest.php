@@ -6,7 +6,7 @@ namespace Integration;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\CoversClass;
-use SharedKernel\Infrastructure\Clock\FixedClock;
+use Shared\Infrastructure\Clock\FixedClock;
 
 #[CoversClass(FixedClock::class)]
 final class DummyTest extends IntegrationTestCase

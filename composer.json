@@ -49,7 +49,7 @@
       "src/Kernel.php"
     ],
     "psr-4": {
-      "SharedKernel\\": "src/SharedKernel"
+      "Shared\\": "src/Shared"
     }
   },
   "autoload-dev": {
@@ -80,41 +80,41 @@
     "post-update-cmd": [
       "@auto-scripts"
     ],
-    "test:php-stan": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpstan analyse -c stan.neon --no-progress --no-interaction --no-ansi"
+    "test:phpstan": [
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=0 vendor/bin/phpstan analyse -c stan.neon --no-progress --no-interaction --no-ansi"
     ],
-    "test:cs-fixer": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --dry-run --diff --allow-risky=yes"
+    "test:csfixer": [
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=0 vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --dry-run --diff --allow-risky=yes"
     ],
-    "test:cs-fixer:fix": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --diff --allow-risky=yes --quiet"
+    "test:csfixer:fix": [
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=0 vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --diff --allow-risky=yes --quiet"
     ],
     "test:deptrac": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/deptrac analyse --config-file=deptrac.yml --cache-file=var/.deptrac.cache --fail-on-uncovered --report-uncovered"
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=0 vendor/bin/deptrac analyse --config-file=deptrac.yml --cache-file=var/.deptrac.cache --fail-on-uncovered --report-uncovered"
     ],
     "test:unit": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit --no-coverage"
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=0 vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit --no-coverage"
     ],
     "test:integration": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpunit --configuration=phpunit.xml --testsuite=integration --no-coverage"
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=0 vendor/bin/phpunit --configuration=phpunit.xml --testsuite=integration --no-coverage"
     ],
     "test:behat": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/behat --config=behat.yml --strict --no-colors --format=progress"
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=0 vendor/bin/behat --config=behat.yml --strict --no-colors --format=progress"
     ],
     "test:mutation": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/infection --configuration=infection.json"
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=1 vendor/bin/infection --configuration=infection.json"
     ],
     "test:coverage": [
-      "APP_ENV=test php -d pcov.enabled=1 -d xdebug.mode=off vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit,integration"
+      "APP_ENV=test php -d xdebug.mode=off -d pcov.enable=1 vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit,integration"
     ],
     "cache:clear": [
       "rm -rf var/cache",
       "@auto-scripts"
     ],
-    "migrations": [
+    "migrations:migrate": [
       "bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration --quiet"
     ],
-    "migrations-test": [
+    "migrations:migrate:test": [
       "APP_ENV=test bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration --quiet"
     ]
   },

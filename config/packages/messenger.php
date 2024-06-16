@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use SharedKernel\Application\Message\AsyncMessage;
-use SharedKernel\Application\Message\SyncMessage;
-use SharedKernel\Infrastructure\Messenger\MessageSerializer;
-use SharedKernel\Infrastructure\Messenger\UnlimitedRetryStrategy;
+use Shared\Application\Message\AsyncMessage;
+use Shared\Application\Message\SyncMessage;
+use Shared\Infrastructure\Messenger\MessageSerializer;
+use Shared\Infrastructure\Messenger\UnlimitedRetryStrategy;
 use Symfony\Config\FrameworkConfig;
 
 // @formatter:off

@@ -40,7 +40,7 @@ jobs:
                     COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
                     SYMFONY_CACHE: ${{ github.run_id }}
             -   name: Run phpstan
-                run: composer test:php-stan
+                run: composer test:phpstan
 
     csfixer:
         name: CSFixer
@@ -57,7 +57,7 @@ jobs:
                     SYMFONY_CACHE: ${{ github.run_id }}
 
             -   name: Run cs-fixer
-                run: composer test:cs-fixer
+                run: composer test:csfixer
 
     deptrac:
         name: Deptrac

@@ -5,22 +5,22 @@ parameters:
     - name: SharedDomain
       collectors:
         - type: directory
-          value: src/SharedKernel/Domain/*
+          value: src/Shared/Domain/*
 
     - name: SharedApplication
       collectors:
         - type: directory
-          value: src/SharedKernel/Application/*
+          value: src/Shared/Application/*
 
     - name: SharedInfrastructure
       collectors:
         - type: directory
-          value: src/SharedKernel/Infrastructure/*
+          value: src/Shared/Infrastructure/*
 
     - name: SharedUserInterface
       collectors:
         - type: directory
-          value: src/SharedKernel/UserInterface/*
+          value: src/Shared/UserInterface/*
 
     - name: Symfony
       collectors:

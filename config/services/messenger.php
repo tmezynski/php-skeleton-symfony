@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use SharedKernel\Application\Message\TraceableStampFactory;
-use SharedKernel\Infrastructure\Messenger\MessageSerializer;
-use SharedKernel\Infrastructure\Messenger\UnlimitedRetryStrategy;
-use SharedKernel\Infrastructure\Normalizer\MoneyNormalizer;
-use SharedKernel\Infrastructure\Normalizer\UuidNormalizer;
+use Shared\Application\Message\TraceableStampFactory;
+use Shared\Infrastructure\Messenger\MessageSerializer;
+use Shared\Infrastructure\Messenger\UnlimitedRetryStrategy;
+use Shared\Infrastructure\Normalizer\MoneyNormalizer;
+use Shared\Infrastructure\Normalizer\UuidNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
