@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Integration;
 
 use DateTimeImmutable;
+use PHPUnit\Framework\Attributes\CoversClass;
+use SharedKernel\Infrastructure\Clock\FixedClock;
 
-/**
- * @coversNothing
- */
+#[CoversClass(FixedClock::class)]
 final class DummyTest extends IntegrationTestCase
 {
     public function testDummy(): void
