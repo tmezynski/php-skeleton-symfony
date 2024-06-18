@@ -8,7 +8,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shared\Domain\Uuid;
+use Shared\Domain\ValueObject\Uuid;
 
 #[CoversClass(Uuid::class)]
 final class UuidTest extends TestCase

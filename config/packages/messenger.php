@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
-use Shared\Application\Message\AsyncMessage;
-use Shared\Application\Message\SyncMessage;
+use Shared\Application\Command\AsyncCommand;
+use Shared\Application\Command\SyncCommand;
+use Shared\Application\Query\AsyncQuery;
+use Shared\Application\Query\SyncQuery;
+use Shared\Domain\Event\AsyncEvent;
+use Shared\Domain\Event\SyncEvent;
 use Shared\Infrastructure\Messenger\MessageSerializer;
 use Shared\Infrastructure\Messenger\UnlimitedRetryStrategy;
 use Symfony\Config\FrameworkConfig;
@@ -41,10 +45,26 @@ return static function (FrameworkConfig $framework): void {
 
     // Routing
     $messenger
-        ->routing(SyncMessage::class)
+        ->routing(SyncCommand::class)
         ->senders(['db_log', 'sync']);
 
     $messenger
-        ->routing(AsyncMessage::class)
-        ->senders(['db_log', 'db']);
+        ->routing(SyncQuery::class)
+        ->senders(['db_log', 'sync']);
+
+    $messenger
+        ->routing(SyncEvent::class)
+        ->senders(['db_log', 'sync']);
+
+    $messenger
+        ->routing(AsyncCommand::class)
+        ->senders(['db_log', 'sync']);
+
+    $messenger
+        ->routing(AsyncQuery::class)
+        ->senders(['db_log', 'sync']);
+
+    $messenger
+        ->routing(AsyncEvent::class)
+        ->senders(['db_log', 'sync']);
 };

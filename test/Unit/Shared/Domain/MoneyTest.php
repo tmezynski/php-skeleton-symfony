@@ -8,10 +8,10 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shared\Domain\Amount;
-use Shared\Domain\Currency;
-use Shared\Domain\EnumTrait;
-use Shared\Domain\Money;
+use Shared\Domain\ValueObject\Amount;
+use Shared\Domain\ValueObject\Currency;
+use Shared\Domain\ValueObject\EnumTrait;
+use Shared\Domain\ValueObject\Money;
 
 #[
     CoversClass(Money::class),

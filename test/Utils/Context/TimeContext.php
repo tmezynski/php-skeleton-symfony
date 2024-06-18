@@ -7,7 +7,7 @@ namespace Utils\Context;
 use Behat\Behat\Context\Context;
 use DateTimeImmutable;
 use RuntimeException;
-use Shared\Application\Clock;
+use Shared\Application\Clock\Clock;
 use Shared\Infrastructure\Clock\FixedClock;
 
 final class TimeContext implements Context

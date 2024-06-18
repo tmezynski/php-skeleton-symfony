@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shared\Application;
+namespace Shared\Application\Clock;
 
 use DateTimeInterface;
 

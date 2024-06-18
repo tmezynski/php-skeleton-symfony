@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Shared\Application\Clock;
+use Shared\Application\Clock\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Utils\Context\DatabaseContext;
 use Utils\Context\DemoContext;

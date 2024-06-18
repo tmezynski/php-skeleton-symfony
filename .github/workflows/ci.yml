@@ -2,9 +2,8 @@ name: CI
 
 on:
     push:
-        paths:
-            - '**.php'
-            - '**.yml'
+        branches:
+            - master
     pull_request:
         paths:
             - '**.php'
@@ -27,6 +26,7 @@ jobs:
                 run: |
                     composer install --optimize-autoloader --no-scripts --no-progress --quiet
                     bin/console cache:warmup
+
     phpstan:
         name: PHPStan
         runs-on: ubuntu-latest

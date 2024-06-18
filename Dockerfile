@@ -14,13 +14,9 @@ RUN install-php-extensions bcmath pcov redis pdo pdo_pgsql \
 
 RUN adduser -D -u ${USER_ID} -G www-data local
 
-USER local
-
 WORKDIR /app
 
 FROM base AS development
-
-USER root
 
 RUN install-php-extensions xdebug \
     && rm -rf /tmp/*

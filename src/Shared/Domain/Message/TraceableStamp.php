@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shared\Application\Message;
+namespace Shared\Domain\Message;
 
-use Shared\Domain\Uuid;
+use Shared\Domain\ValueObject\Uuid;
 
 final readonly class TraceableStamp
 {

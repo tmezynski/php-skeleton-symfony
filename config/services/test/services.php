@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Shared\Application\Clock;
+use Shared\Application\Clock\Clock;
 use Shared\Infrastructure\Clock\FixedClock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Shared\Application\Clock;
+use Shared\Application\Clock\Clock;
 use Shared\Infrastructure\Clock\SystemClock;
 
 // @formatter:off

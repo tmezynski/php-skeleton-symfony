@@ -6,8 +6,8 @@ namespace Shared\Infrastructure\Messenger;
 
 use ReflectionClass;
 use ReflectionException;
-use Shared\Application\Message\AbstractTraceableMessage;
-use Shared\Application\Message\TraceableStamp;
+use Shared\Domain\Message\TraceableMessage;
+use Shared\Domain\Message\TraceableStamp;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
@@ -46,7 +46,7 @@ final readonly class MessageSerializer implements SerializerInterface
             self::CLASS_PATH => $message::class,
         ];
 
-        if ($message instanceof AbstractTraceableMessage) {
+        if ($message instanceof TraceableMessage) {
             $header[self::TRACEABLE_STAMP] = $normalizedMessage[self::TRACEABLE_STAMP];
             unset($normalizedMessage[self::TRACEABLE_STAMP]);
             $header[self::METADATA] = $normalizedMessage[self::METADATA];
@@ -80,7 +80,7 @@ final readonly class MessageSerializer implements SerializerInterface
         /** @var object $message */
         $message = $this->serializer->deserialize($body, $className, self::FORMAT);
 
-        if ($message instanceof AbstractTraceableMessage) {
+        if ($message instanceof TraceableMessage) {
             if (isset($headers[self::TRACEABLE_STAMP])) {
                 /** @var TraceableStamp $traceableStamp */
                 $traceableStamp = $this->serializer->denormalize(

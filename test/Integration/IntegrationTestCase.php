@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Integration;
 
 use Doctrine\DBAL\Connection;
-use Shared\Application\Clock;
+use Shared\Application\Clock\Clock;
 use Shared\Infrastructure\Clock\FixedClock;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Webmozart\Assert\Assert;

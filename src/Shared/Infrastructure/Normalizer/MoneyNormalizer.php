@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shared\Infrastructure\Normalizer;
 
 use RuntimeException;
-use Shared\Domain\Amount;
-use Shared\Domain\Currency;
-use Shared\Domain\Money;
+use Shared\Domain\ValueObject\Amount;
+use Shared\Domain\ValueObject\Currency;
+use Shared\Domain\ValueObject\Money;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 

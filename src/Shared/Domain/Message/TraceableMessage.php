@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shared\Application\Message;
+namespace Shared\Domain\Message;
 
-abstract class AbstractTraceableMessage
+abstract class TraceableMessage
 {
     private ?TraceableStamp $traceableStamp = null;
 
