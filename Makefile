@@ -1,10 +1,12 @@
-DC = USER_ID=$(shell id -u) GROUP_ID=$(shell id -g) docker-compose -f ./compose.yaml
+DC = $(if $(shell which docker-compose),USER_ID=$(shell id -u) docker-compose,USER_ID=$(shell id -u) docker compose)
+include .env
+export
 
 ########################################################################################################################
 ################################################## DEV TOOLS ###########################################################
 ########################################################################################################################
 .PHONY: create
-create: build init
+create: build composer db db-test clear-logs
 
 .PHONY: build
 build:
@@ -20,34 +22,45 @@ up:
 
 .PHONY: down
 down:
-	@$(DC) down
+	@$(DC) down --remove-orphans
+
+.PHONY: logs
+logs:
+	@$(DC) logs
 
 .PHONY: destroy
 destroy:
 	@$(DC) down -v
 
-.PHONY: init
-init: up
+.PHONY: composer
+composer: up
 	@$(DC) exec php composer install
-	@$(MAKE) migrations-test
+
+.PHONY: db
+db:
+	@$(DC) exec php composer database:init
+
+.PHONY: db-test
+db-test:
+	@$(DC) exec php composer test:database:init
 
 .PHONY: sh
 sh:
 	@$(DC) exec php sh
 
-################################################### DATABASE ###########################################################
-.PHONY: migrations
-migrations:
-	@$(DC) exec php composer migrations:migrate
-
-.PHONY: migrations-test
-migrations-test:
-	@$(DC) exec php composer migrations:migrate:test
-
 .PHONY: cc
 cc:
+	@$(DC) exec php sh -c 'rm -rf /app/var/cache'
 	@$(DC) exec php composer cache:clear
-	@rm -rf var/cache/*
+	@$(DC) exec php composer dump-autoload
+
+.PHONY: clear-logs
+clear-logs:
+	@$(DC) exec php sh -c 'rm -rf /app/var/log'
+
+.PHONY: create-migration
+create-migration:
+	@$(DC) exec php composer database:migration:create
 
 ########################################################################################################################
 #################################################### TESTS #############################################################
@@ -55,7 +68,7 @@ cc:
 .PHONY: test
 test: test-static test-unit test-integration test-behat
 
-#################################################### STATIC ############################################################
+################################################### STATIC #############################################################
 .PHONY: test-static
 test-static: test-phpstan test-csfixer test-deptrac
 
@@ -85,17 +98,21 @@ test-unit:
 test-integration:
 	@$(DC) exec php composer test:integration
 
-##################################################### BEHAT ############################################################
-.PHONY: test-behat
+################################################## ACCEPTANCE ##########################################################
+.PHONY: test-acceptance
 test-behat:
 	@$(DC) exec php composer test:behat
 
-#################################################### MUTATION ##########################################################
+################################################### MUTATION ###########################################################
 .PHONY: test-mutation
 test-mutation:
 	@$(DC) exec php composer test:mutation
 
-#################################################### COVERAGE ##########################################################
+################################################### COVERAGE ###########################################################
 .PHONY: test-coverage
 test-coverage:
 	@$(DC) exec php composer test:coverage
+
+.PHONY: test-path-coverage
+test-path-coverage:
+	@$(DC) exec php composer test:coverage:path

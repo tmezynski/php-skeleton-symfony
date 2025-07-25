@@ -12,6 +12,7 @@ return (new Config())
         (new Finder())
             ->in(__DIR__)
             ->exclude([
+                '.docker',
                 '.github',
                 'build',
                 'docs',
@@ -20,7 +21,8 @@ return (new Config())
             ]),
     )
     ->setHideProgress(true)
-    ->setCacheFile('var/.php-cs-fixer.cache')
+    ->setCacheFile('var/php-cs-fixer.cache')
+    ->setRiskyAllowed(true)
     ->setRules([
         '@PhpCsFixer' => true,
         '@PER-CS2.0' => true,
@@ -35,6 +37,10 @@ return (new Config())
         'single_line_empty_body' => false,
         'cast_spaces' => false,
         'php_unit_internal_class' => false,
+        'php_unit_test_class_requires_covers' => false,
+        'phpdoc_to_comment' => [
+            'ignored_tags' => ['var'],
+        ],
         'phpdoc_align' => [
             'align' => 'left',
         ],

@@ -1,26 +1,75 @@
-FROM php:8.3-fpm-alpine AS base
+FROM nginx:alpine AS nginx
 
-RUN set -eux
-RUN apk update --no-cache
+ENV TZ=UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ARG USER_ID
-ARG GROUP_ID
+COPY ./public /app/public
+
+COPY .docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+RUN rm /var/log/nginx/access.log && rm /var/log/nginx/error.log
+
+WORKDIR /app
+
+FROM php:8.4-fpm-alpine3.22 AS base
+
+ENV TZ=UTC
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+RUN rm -rf /var/cache/apk/*
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-RUN install-php-extensions bcmath pcov redis pdo pdo_pgsql \
+COPY .docker/php/php.ini $PHP_INI_DIR/conf.d/php.ini
+
+RUN install-php-extensions \
+    bcmath \
+    pdo \
+    pdo_pgsql \
     && rm -rf /tmp/*
 
-RUN adduser -D -u ${USER_ID} -G www-data local
+FROM base AS vendor
+
+WORKDIR /build
+
+COPY composer* ./
+COPY symfony.* ./
+
+RUN set -aux; \
+    composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progres --no-dev --no-interaction
+
+FROM base AS runtime-production
+
+COPY .docker/php/php-opcache.ini $PHP_INI_DIR/php-opcache.ini
+
+COPY ./ /app
+COPY ./.docker/prod/.env /app/.env.local
+COPY --from=vendor /build/vendor /app/vendor
+RUN rm -rf /app/.docker
 
 WORKDIR /app
 
-FROM base AS development
+RUN set -eux; \
+    composer dump-autoload --optimize; \
+    compsoer run-script post-install-cmd
 
-RUN install-php-extensions xdebug \
-    && rm -rf /tmp/*
+RUN chown -R www-data:www-data /app/var
+RUN chown -R www-data:www-data /app/vendor
 
-COPY build/php/dev.ini $PHP_INI_DIR/conf.d/php-ini-overrides.ini
+USER www-data
 
+FROM base AS runtime-development
+ARG USER_ID
+
+COPY .docker/php/php-dev.ini $PHP_INI_DIR/php-dev.ini
+
+RUN set -eux; \
+    install-php-extensions \
+        xdebug-3.4.1; \
+    rm -rf /tmp/*
+
+RUN adduser -D -H -u ${USER_ID} -G www-data local
 USER local
+
+WORKDIR /app
