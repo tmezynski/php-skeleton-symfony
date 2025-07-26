@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Integration;
+namespace Test\Integration;
 
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Assert;
 use Shared\Application\Clock\Clock;
 use Shared\Infrastructure\Clock\FixedClock;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Webmozart\Assert\Assert;
 
 abstract class IntegrationTestCase extends KernelTestCase
 {
@@ -20,11 +20,11 @@ abstract class IntegrationTestCase extends KernelTestCase
         self::bootKernel();
 
         $connection = self::getContainer()->get('doctrine.dbal.db_connection');
-        Assert::isInstanceOf($connection, Connection::class);
+        Assert::assertInstanceOf(Connection::class, $connection);
         $this->connection = $connection;
 
         $clock = self::getContainer()->get(Clock::class);
-        Assert::isInstanceOf($clock, FixedClock::class);
+        Assert::assertInstanceOf(FixedClock::class, $clock);
         $this->clock = $clock;
 
         $this->connection->beginTransaction();

@@ -10,8 +10,8 @@ use Symfony\Bundle\MonologBundle\MonologBundle;
 
 return [
     FrameworkBundle::class => ['all' => true],
-    FriendsOfBehatSymfonyExtensionBundle::class => ['test' => true],
     DoctrineBundle::class => ['all' => true],
     DoctrineMigrationsBundle::class => ['all' => true],
     MonologBundle::class => ['all' => true],
+    FriendsOfBehatSymfonyExtensionBundle::class => ['test' => true],
 ];

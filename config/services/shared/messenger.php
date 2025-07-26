@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Shared\Application\Message\TraceableStampFactory;
+use Shared\Domain\Message\TraceableStampFactory;
 use Shared\Infrastructure\Messenger\MessageSerializer;
 use Shared\Infrastructure\Messenger\UnlimitedRetryStrategy;
 use Shared\Infrastructure\Normalizer\MoneyNormalizer;
@@ -20,12 +20,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->defaults()
-        ->autowire(false)
+        ->autowire(true)
         ->autoconfigure();
 
+    $services->set(DateTimeNormalizer::class);
     $services->set(UuidNormalizer::class);
     $services->set(MoneyNormalizer::class);
-    $services->set(DateTimeNormalizer::class);
     $services->set(ArrayDenormalizer::class);
     $services->set(PropertyNormalizer::class);
     $services->set(ObjectNormalizer::class);
@@ -35,9 +35,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set(Serializer::class)
         ->args([
             [
+                service(DateTimeNormalizer::class),
                 service(UuidNormalizer::class),
                 service(MoneyNormalizer::class),
-                service(DateTimeNormalizer::class),
                 service(ArrayDenormalizer::class),
                 service(PropertyNormalizer::class),
                 service(ObjectNormalizer::class),
@@ -49,7 +49,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services
         ->set(MessageSerializer::class)
-        ->args([service(Serializer::class)]);
+        ->args([service('serializer')]);
 
     $services
         ->set(UnlimitedRetryStrategy::class);

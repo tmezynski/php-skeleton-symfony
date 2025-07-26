@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 use Shared\Application\Clock\Clock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Utils\Context\DatabaseContext;
-use Utils\Context\DemoContext;
-use Utils\Context\TimeContext;
-use Utils\Dsl\Request\TestRequest;
+use Test\Utils\Context\DatabaseContext;
+use Test\Utils\Context\DemoContext;
+use Test\Utils\Context\TimeContext;
+use Test\Utils\Dsl\Request\TestRequest;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 

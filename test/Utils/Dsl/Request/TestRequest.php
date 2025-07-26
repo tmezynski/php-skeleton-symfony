@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Utils\Dsl\Request;
+namespace Test\Utils\Dsl\Request;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

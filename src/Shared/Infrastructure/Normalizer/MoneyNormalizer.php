@@ -43,13 +43,18 @@ final class MoneyNormalizer implements NormalizerInterface, DenormalizerInterfac
         return new Money(new Decimal($amount), Currency::from($currency));
     }
 
-    public function supportsNormalization($data, ?string $format = null): bool
+    public function supportsNormalization($data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof Money;
     }
 
-    public function supportsDenormalization($data, string $type, ?string $format = null): bool
+    public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
     {
         return Money::class === $type;
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [Money::class => true];
     }
 }

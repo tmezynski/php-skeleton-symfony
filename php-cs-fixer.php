@@ -13,7 +13,7 @@ return (new Config())
         (new Finder())
             ->in(__DIR__)
             ->exclude([
-                '.docker',
+                'build',
                 '.github',
                 'build',
                 'docs',

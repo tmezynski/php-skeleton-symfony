@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Unit\Shared\Domain;
+namespace Test\Unit\Shared\Domain;
 
 use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shared\Domain\ValueObject\Decimal;
 use Throwable;
 
-#[CoversClass(Decimal::class)]
 final class AmountTest extends TestCase
 {
     #[Test]
@@ -34,7 +32,7 @@ final class AmountTest extends TestCase
     public function createBigIntFromStringInValidState(string $value, string $result): void
     {
         $amount = new Decimal($value);
-        Assert::assertEquals($result, (string)$amount);
+        Assert::assertEquals($result, (string) $amount);
     }
 
     public static function validStateStringDataProvider(): Generator
@@ -193,7 +191,7 @@ final class AmountTest extends TestCase
     {
         $this->assertEquals(
             $result,
-            (string)(new Decimal($value))->round($precision),
+            (string) (new Decimal($value))->round($precision),
         );
     }
 

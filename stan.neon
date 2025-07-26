@@ -12,3 +12,6 @@ parameters:
     - public
     - src
     - test
+  excludePaths:
+    - src/Kernel.php
+    - test/bootstrap.php

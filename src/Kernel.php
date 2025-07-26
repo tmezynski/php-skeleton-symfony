@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace src;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -16,10 +16,15 @@ final class Kernel extends BaseKernel
     {
         $configDir = $this->getConfigDir();
 
+        if ('behat' === $this->environment) {
+            $container->import(sprintf('%s/{packages}/test/*.php', $configDir));
+            $container->import(sprintf('%s/{services}/*/test/*.php', $configDir));
+        }
+
         $container->import(sprintf('%s/{packages}/*.php', $configDir));
         $container->import(sprintf('%s/{packages}/%s/*.php', $configDir, $this->environment));
 
-        $container->import(sprintf('%s/{services}/*.php', $configDir));
-        $container->import(sprintf('%s/{services}/%s/*.php', $configDir, $this->environment));
+        $container->import(sprintf('%s/{services}/*/*.php', $configDir));
+        $container->import(sprintf('%s/{services}/*/%s/*.php', $configDir, $this->environment));
     }
 }

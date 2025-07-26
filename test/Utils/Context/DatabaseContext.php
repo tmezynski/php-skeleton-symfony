@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Utils\Context;
+namespace Test\Utils\Context;
 
 use Behat\Behat\Context\Context;
 use Doctrine\DBAL\Connection;

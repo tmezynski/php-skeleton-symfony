@@ -2,23 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Unit\Shared\Domain;
+namespace Test\Unit\Shared\Domain;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shared\Domain\ValueObject\Decimal;
 use Shared\Domain\ValueObject\Currency;
-use Shared\Domain\ValueObject\EnumTrait;
+use Shared\Domain\ValueObject\Decimal;
 use Shared\Domain\ValueObject\Money;
 
-#[
-    CoversClass(Money::class),
-    CoversClass(Decimal::class),
-    CoversClass(Currency::class),
-    CoversClass(EnumTrait::class),
-]
 final class MoneyTest extends TestCase
 {
     #[Test]
@@ -126,7 +118,7 @@ final class MoneyTest extends TestCase
     public function printMoney(): void
     {
         $money = new Money(new Decimal('1.33332'), Currency::USD);
-        $this->assertEquals('1.33 USD', (string)$money);
+        $this->assertEquals('1.33 USD', (string) $money);
     }
 
     #[Test]

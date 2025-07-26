@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Unit\Shared\Domain;
+namespace Test\Unit\Shared\Domain;
 
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shared\Domain\ValueObject\Uuid;
 
-#[CoversClass(Uuid::class)]
 final class UuidTest extends TestCase
 {
     #[Test]
@@ -29,7 +27,7 @@ final class UuidTest extends TestCase
         $uuid1 = Uuid::fromUuidString('a6ef8e41-155b-4b92-8dd6-abd8383f99f4');
         $uuid2 = Uuid::fromUuidString('a6ef8e41-155b-4b92-8dd6-abd8383f99f4');
 
-        Assert::assertEquals('a6ef8e41-155b-4b92-8dd6-abd8383f99f4', (string)$uuid1);
+        Assert::assertEquals('a6ef8e41-155b-4b92-8dd6-abd8383f99f4', (string) $uuid1);
         Assert::assertTrue($uuid1->equals($uuid2));
     }
 
@@ -46,6 +44,6 @@ final class UuidTest extends TestCase
 
         Assert::assertTrue($uuid1->equals($uuid2));
         Assert::assertFalse($uuid2->equals($uuid3));
-        Assert::assertEquals('80764b88-b503-5b6b-b972-c7e533a5d8c5', (string)$uuid1);
+        Assert::assertEquals('80764b88-b503-5b6b-b972-c7e533a5d8c5', (string) $uuid1);
     }
 }

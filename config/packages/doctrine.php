@@ -12,23 +12,6 @@ return static function (DoctrineConfig $doctrine): void {
     $doctrine
         ->dbal()
         ->connection('db')
-        ->host(env('DB_HOST'))
-        ->port(env('DB_PORT'))
-        ->dbname(env('DB_NAME'))
-        ->user(env('DB_USER'))
-        ->password(env('DB_PASSWORD'))
-        ->serverVersion(env('DB_SERVER_VERSION'))
+        ->url(env('DATABASE_URL'))
         ->driver(env('DB_DRIVER'));
-
-    // ORM
-    $doctrine
-        ->orm()
-        ->autoGenerateProxyClasses(false)
-        ->entityManager('entity_manager')
-        ->connection('db')
-        ->autoMapping(false);
-
-    $doctrine
-        ->orm()
-        ->defaultEntityManager('entity_manager');
 };

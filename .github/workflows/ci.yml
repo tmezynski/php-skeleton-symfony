@@ -2,155 +2,68 @@ name: CI
 
 on:
     push:
-        branches:
-            - master
+        branches: master
     pull_request:
-        paths:
-            - '**.php'
-            - '**.yml'
+        branches: master
+    release:
+        types: [ published ]
 
 jobs:
     build:
         if: "!contains(github.event.head_commit.message, 'SKIP-CI')"
-        name: Build project
+        name: Automated tests
         runs-on: ubuntu-latest
+        services:
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_DB: skeleton_test
+                    POSTGRES_USER: user
+                    POSTGRES_PASSWORD: password
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 2s
+                    --health-timeout 3s
+                    --health-retries 10
+                ports:
+                    - 5432:5432
         steps:
             -   name: Checkout branch
                 uses: actions/checkout@v4
-            -   name: Project setup
-                uses: ./.github/actions/common
+
+            -   name: Set up PHP
+                uses: shivammathur/setup-php@v2
                 with:
-                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
-                    SYMFONY_CACHE: ${{ github.run_id }}
+                    php-version: '8.4'
+                    coverage: none
+
+            -   name: Load .env.ci
+                uses: falti/dotenv-action@v1.1.3
+                with:
+                    path: .env.ci
+                    export-variables: true
+                    keys-case: bypass
+
             -   name: Build project
                 run: |
                     composer install --optimize-autoloader --no-scripts --no-progress --quiet
                     bin/console cache:warmup
-
-    phpstan:
-        name: PHPStan
-        runs-on: ubuntu-latest
-        needs: build
-        steps:
-            -   name: Checkout branch
-                uses: actions/checkout@v4
-            -   name: Project setup
-                uses: ./.github/actions/common
-                with:
-                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
-                    SYMFONY_CACHE: ${{ github.run_id }}
-            -   name: Run phpstan
-                run: composer test:phpstan
-
-    csfixer:
-        name: CSFixer
-        runs-on: ubuntu-latest
-        needs: build
-        steps:
-            -   name: Checkout branch
-                uses: actions/checkout@v4
-
-            -   name: Project setup
-                uses: ./.github/actions/common
-                with:
-                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
-                    SYMFONY_CACHE: ${{ github.run_id }}
+                    composer test:database:init
 
             -   name: Run cs-fixer
                 run: composer test:csfixer
 
-    deptrac:
-        name: Deptrac
-        runs-on: ubuntu-latest
-        needs: build
-        steps:
-            -   name: Checkout branch
-                uses: actions/checkout@v4
-
-            -   name: Project setup
-                uses: ./.github/actions/common
-                with:
-                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
-                    SYMFONY_CACHE: ${{ github.run_id }}
+            -   name: Run phpstan
+                run: composer test:phpstan
 
             -   name: Run deptrac
                 run: composer test:deptrac
 
-    unit:
-        name: Unit tests
-        runs-on: ubuntu-latest
-        needs: [ phpstan, csfixer, deptrac ]
-        steps:
-            -   name: Checkout branch
-                uses: actions/checkout@v4
-
-            -   name: Project setup
-                uses: ./.github/actions/common
-                with:
-                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
-                    SYMFONY_CACHE: ${{ github.run_id }}
-
             -   name: Unit tests
                 run: composer test:unit
-
-    integration:
-        name: Integration tests
-        runs-on: ubuntu-latest
-        needs: [ phpstan, csfixer, deptrac ]
-        services:
-            postgres:
-                image: postgres
-                env:
-                    POSTGRES_DB: skeleton_test
-                    POSTGRES_USER: user
-                    POSTGRES_PASSWORD: password
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 3s
-                    --health-timeout 5s
-                    --health-retries 20
-                ports:
-                    - 5432:5432
-        steps:
-            -   name: Checkout branch
-                uses: actions/checkout@v4
-
-            -   name: Project setup
-                uses: ./.github/actions/db
-                with:
-                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
-                    SYMFONY_CACHE: ${{ github.run_id }}
 
             -   name: Integration tests
                 run: composer test:integration
 
-    behat:
-        name: Behat tests
-        runs-on: ubuntu-latest
-        needs: [ phpstan, csfixer, deptrac ]
-        services:
-            postgres:
-                image: postgres
-                env:
-                    POSTGRES_DB: skeleton_test
-                    POSTGRES_USER: user
-                    POSTGRES_PASSWORD: password
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 3s
-                    --health-timeout 5s
-                    --health-retries 20
-                ports:
-                    - 5432:5432
-        steps:
-            -   name: Checkout branch
-                uses: actions/checkout@v4
-
-            -   name: Project setup
-                uses: ./.github/actions/db
-                with:
-                    COMPOSER_CACHE: ${{ hashFiles('**/composer.lock') }}
-                    SYMFONY_CACHE: ${{ github.run_id }}
-
-            -   name: Behat tests
-                run: composer test:behat
+            -   name: Acceptance tests
+                run: composer test:acceptance

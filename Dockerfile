@@ -5,7 +5,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY ./public /app/public
 
-COPY .docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY build/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 RUN rm /var/log/nginx/access.log && rm /var/log/nginx/error.log
 
@@ -21,7 +21,7 @@ RUN rm -rf /var/cache/apk/*
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-COPY .docker/php/php.ini $PHP_INI_DIR/conf.d/php.ini
+COPY build/php/php.ini $PHP_INI_DIR/conf.d/php.ini
 
 RUN install-php-extensions \
     bcmath \
@@ -41,12 +41,11 @@ RUN set -aux; \
 
 FROM base AS runtime-production
 
-COPY .docker/php/php-opcache.ini $PHP_INI_DIR/php-opcache.ini
+COPY build/php/php-opcache.ini $PHP_INI_DIR/php-opcache.ini
 
 COPY ./ /app
-COPY ./.docker/prod/.env /app/.env.local
 COPY --from=vendor /build/vendor /app/vendor
-RUN rm -rf /app/.docker
+RUN rm -rf /app/build
 
 WORKDIR /app
 
@@ -62,7 +61,7 @@ USER www-data
 FROM base AS runtime-development
 ARG USER_ID
 
-COPY .docker/php/php-dev.ini $PHP_INI_DIR/php-dev.ini
+COPY build/php/php-dev.ini $PHP_INI_DIR/php-dev.ini
 
 RUN set -eux; \
     install-php-extensions \
