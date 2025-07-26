@@ -1,0 +1,47 @@
+parameters:
+  paths:
+    - src
+  layers:
+    - name: SharedApplication
+      collectors:
+        - type: classLike
+          value: Shared\\Application
+    - name: SharedDomain
+      collectors:
+        - type: classLike
+          value: Shared\\Domain
+    - name: SharedInfrastructure
+      collectors:
+        - type: classLike
+          value: Shared\\Infrastructure
+    - name: SharedUserInterface
+      collectors:
+        - type: classLike
+          value: Shared\\Ui
+
+    - name: Symfony
+      collectors:
+        - type: classLike
+          value: ^(Symfony|Doctrine)\\.*
+    - name: Psr
+      collectors:
+        - type: classLike
+          value: Psr\\.*
+    - name: Utils
+      collectors:
+        - type: classNameRegex
+          value: '#(Ramsey|Brick|Webmozart|GuzzleHttp).*#'
+
+  ruleset:
+    SharedDomain:
+      - Utils
+    SharedApplication:
+      - SharedDomain
+    SharedInfrastructure:
+      - SharedDomain
+      - SharedApplication
+      - Symfony
+      - Utils
+    SharedUserInterface:
+      - SharedApplication
+      - Symfony

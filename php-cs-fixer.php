@@ -7,6 +7,7 @@ use PhpCsFixer\Finder;
 use PhpCsFixer\Runner\Parallel\ParallelConfig;
 
 return (new Config())
+    ->setUnsupportedPhpVersionAllowed(true)
     ->setParallelConfig(new ParallelConfig(8, 20))
     ->setFinder(
         (new Finder())

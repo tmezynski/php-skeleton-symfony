@@ -66,11 +66,11 @@ create-migration:
 #################################################### TESTS #############################################################
 ########################################################################################################################
 .PHONY: test
-test: test-static test-unit test-integration test-behat
+test: test-static test-unit test-integration test-acceptance
 
 ################################################### STATIC #############################################################
 .PHONY: test-static
-test-static: test-phpstan test-csfixer test-deptrac
+test-static: test-csfixer test-phpstan test-deptrac
 
 .PHONY: fix-static
 fix-static:
@@ -100,8 +100,8 @@ test-integration:
 
 ################################################## ACCEPTANCE ##########################################################
 .PHONY: test-acceptance
-test-behat:
-	@$(DC) exec php composer test:behat
+test-acceptance:
+	@$(DC) exec php composer test:acceptance
 
 ################################################### MUTATION ###########################################################
 .PHONY: test-mutation

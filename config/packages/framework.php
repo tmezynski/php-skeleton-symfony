@@ -10,4 +10,5 @@ use Symfony\Config\FrameworkConfig;
 return static function (FrameworkConfig $framework): void {
     $framework->secret(env('APP_SECRET'));
     $framework->test(false);
+    $framework->propertyInfo()->enabled(true);
 };

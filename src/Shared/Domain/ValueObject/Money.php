@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 final readonly class Money
 {
-    public function __construct(private Amount $amount, private Currency $currency)
+    public function __construct(private Decimal $amount, private Currency $currency)
     {
     }
 
@@ -26,7 +26,7 @@ final readonly class Money
         return new self($this->amount->sub($other->amount), $this->currency);
     }
 
-    public function mul(Amount $multiplier): Money
+    public function mul(Decimal $multiplier): Money
     {
         return new self($this->amount->mul($multiplier), $this->currency);
     }
@@ -34,7 +34,7 @@ final readonly class Money
     /**
      * @throws InvalidArgumentException
      */
-    public function div(Amount $divisor): Money
+    public function div(Decimal $divisor): Money
     {
         return new self($this->amount->div($divisor), $this->currency);
     }
@@ -95,6 +95,6 @@ final readonly class Money
      */
     public static function fromMemento(array $data): self
     {
-        return new self(new Amount($data['amount']), Currency::fromName($data['currency']));
+        return new self(new Decimal($data['amount']), Currency::fromName($data['currency']));
     }
 }

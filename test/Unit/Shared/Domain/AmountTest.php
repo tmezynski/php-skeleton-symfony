@@ -11,10 +11,10 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shared\Domain\ValueObject\Amount;
+use Shared\Domain\ValueObject\Decimal;
 use Throwable;
 
-#[CoversClass(Amount::class)]
+#[CoversClass(Decimal::class)]
 final class AmountTest extends TestCase
 {
     #[Test]
@@ -23,10 +23,18 @@ final class AmountTest extends TestCase
         $amount = null;
 
         try {
-            $amount = new Amount('abc');
+            $amount = new Decimal('abc');
         } catch (Throwable) {
         }
         Assert::assertNull($amount);
+    }
+
+    #[Test]
+    #[DataProvider('validStateStringDataProvider')]
+    public function createBigIntFromStringInValidState(string $value, string $result): void
+    {
+        $amount = new Decimal($value);
+        Assert::assertEquals($result, (string)$amount);
     }
 
     public static function validStateStringDataProvider(): Generator
@@ -53,11 +61,15 @@ final class AmountTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validStateStringDataProvider')]
-    public function createBigIntFromStringInValidState(string $value, string $result): void
+    #[DataProvider('addValuesDataProvider')]
+    public function addShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
-        $amount = new Amount($value);
-        Assert::assertEquals($result, (string)$amount);
+        $amount1 = new Decimal($value1);
+        $amount2 = new Decimal($value2);
+        $result = new Decimal($result);
+
+        Assert::assertTrue($result->equals($amount1->add($amount2)));
+        Assert::assertTrue($result->equals($amount2->add($amount1)));
     }
 
     public static function addValuesDataProvider(): Generator
@@ -76,15 +88,14 @@ final class AmountTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('addValuesDataProvider')]
-    public function addShouldReturnValidResult(string $value1, string $value2, string $result): void
+    #[DataProvider('subValuesDataProvider')]
+    public function subShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
-        $amount1 = new Amount($value1);
-        $amount2 = new Amount($value2);
-        $result = new Amount($result);
+        $amount1 = new Decimal($value1);
+        $amount2 = new Decimal($value2);
+        $result = new Decimal($result);
 
-        Assert::assertTrue($result->equals($amount1->add($amount2)));
-        Assert::assertTrue($result->equals($amount2->add($amount1)));
+        Assert::assertTrue($result->equals($amount1->sub($amount2)));
     }
 
     public static function subValuesDataProvider(): Generator
@@ -107,14 +118,14 @@ final class AmountTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('subValuesDataProvider')]
-    public function subShouldReturnValidResult(string $value1, string $value2, string $result): void
+    #[DataProvider('mulValuesDataProvider')]
+    public function mulShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
-        $amount1 = new Amount($value1);
-        $amount2 = new Amount($value2);
-        $result = new Amount($result);
+        $amount1 = new Decimal($value1);
+        $amount2 = new Decimal($value2);
+        $result = new Decimal($result);
 
-        Assert::assertTrue($result->equals($amount1->sub($amount2)));
+        Assert::assertTrue($result->equals($amount1->mul($amount2)));
     }
 
     public static function mulValuesDataProvider(): Generator
@@ -131,20 +142,9 @@ final class AmountTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('mulValuesDataProvider')]
-    public function mulShouldReturnValidResult(string $value1, string $value2, string $result): void
-    {
-        $amount1 = new Amount($value1);
-        $amount2 = new Amount($value2);
-        $result = new Amount($result);
-
-        Assert::assertTrue($result->equals($amount1->mul($amount2)));
-    }
-
-    #[Test]
     public function canNotDivideByZero(): void
     {
-        $zero = new Amount('0');
+        $zero = new Decimal('0');
 
         try {
             $result = $zero->div($zero);
@@ -152,6 +152,17 @@ final class AmountTest extends TestCase
         }
 
         Assert::assertFalse(isset($result));
+    }
+
+    #[Test]
+    #[DataProvider('divValuesDataProvider')]
+    public function divShouldReturnValidResult(string $value1, string $value2, string $result): void
+    {
+        $amount1 = new Decimal($value1);
+        $amount2 = new Decimal($value2);
+        $result = new Decimal($result);
+
+        Assert::assertTrue($result->equals($amount1->div($amount2)));
     }
 
     public static function divValuesDataProvider(): Generator
@@ -170,21 +181,20 @@ final class AmountTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('divValuesDataProvider')]
-    public function divShouldReturnValidResult(string $value1, string $value2, string $result): void
-    {
-        $amount1 = new Amount($value1);
-        $amount2 = new Amount($value2);
-        $result = new Amount($result);
-
-        Assert::assertTrue($result->equals($amount1->div($amount2)));
-    }
-
-    #[Test]
     public function canNotRoundToNegativeFraction(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        (new Amount('1'))->round(-1);
+        (new Decimal('1'))->round(-1);
+    }
+
+    #[Test]
+    #[DataProvider('roundDataProvider')]
+    public function roundToPassedPrecision(string $value, int $precision, string $result): void
+    {
+        $this->assertEquals(
+            $result,
+            (string)(new Decimal($value))->round($precision),
+        );
     }
 
     public static function roundDataProvider(): Generator
@@ -198,15 +208,5 @@ final class AmountTest extends TestCase
         yield ['1.3333', 2, '1.33'];
 
         yield ['1.3366', 2, '1.34'];
-    }
-
-    #[Test]
-    #[DataProvider('roundDataProvider')]
-    public function roundToPassedPrecision(string $value, int $precision, string $result): void
-    {
-        $this->assertEquals(
-            $result,
-            (string)(new Amount($value))->round($precision),
-        );
     }
 }

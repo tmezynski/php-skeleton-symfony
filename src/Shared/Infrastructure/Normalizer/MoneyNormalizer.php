@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shared\Infrastructure\Normalizer;
 
 use RuntimeException;
-use Shared\Domain\ValueObject\Amount;
+use Shared\Domain\ValueObject\Decimal;
 use Shared\Domain\ValueObject\Currency;
 use Shared\Domain\ValueObject\Money;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -40,7 +40,7 @@ final class MoneyNormalizer implements NormalizerInterface, DenormalizerInterfac
             throw new RuntimeException('Missing currency field in data');
         }
 
-        return new Money(new Amount($amount), Currency::from($currency));
+        return new Money(new Decimal($amount), Currency::from($currency));
     }
 
     public function supportsNormalization($data, ?string $format = null): bool

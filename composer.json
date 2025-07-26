@@ -30,8 +30,9 @@
     "friendsofphp/php-cs-fixer": "^3.58",
     "infection/infection": "^0.27.9",
     "phpstan/phpstan": "^1.10",
+    "phpstan/phpstan-symfony": "^1.4",
     "phpunit/phpunit": "^10.5",
-    "qossmic/deptrac-shim": "^1.0"
+    "qossmic/deptrac": "*"
   },
   "config": {
     "allow-plugins": {
@@ -90,7 +91,7 @@
       "APP_ENV=test php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --diff --allow-risky=yes --quiet"
     ],
     "test:deptrac": [
-      "APP_ENV=test php -d xdebug.mode=off vendor/bin/deptrac analyse --config-file=deptrac.yml --cache-file=var/.deptrac.cache --fail-on-uncovered --report-uncovered"
+      "APP_ENV=test php -d xdebug.mode=off vendor/bin/deptrac analyse --config-file=deptrac.yaml --cache-file=var/.deptrac.cache --fail-on-uncovered --report-uncovered"
     ],
     "test:unit": [
       "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit --no-coverage"
@@ -134,7 +135,7 @@
   "extra": {
     "symfony": {
       "allow-contrib": false,
-      "require": "6.4.*"
+      "require": "6.9.*"
     }
   }
 }
