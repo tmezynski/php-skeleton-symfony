@@ -8,7 +8,6 @@ use Shared\Application\Query\AsyncQuery;
 use Shared\Application\Query\SyncQuery;
 use Shared\Domain\Event\AsyncEvent;
 use Shared\Domain\Event\SyncEvent;
-use Shared\Infrastructure\Messenger\MessageSerializer;
 use Shared\Infrastructure\Messenger\UnlimitedRetryStrategy;
 use Symfony\Config\FrameworkConfig;
 
@@ -33,14 +32,12 @@ return static function (FrameworkConfig $framework): void {
     $messenger
         ->transport('db')
         ->dsn('%env(resolve:DOCTRINE_TRANSPORT_DSN)%')
-        ->serializer(MessageSerializer::class)
         ->options(['table_name' => 'queues.messages'])
         ->retryStrategy(['service' => UnlimitedRetryStrategy::class]);
 
     $messenger
         ->transport('db_log')
         ->dsn('%env(resolve:DOCTRINE_TRANSPORT_DSN)%')
-        ->serializer(MessageSerializer::class)
         ->options(['table_name' => 'queues.messages_log']);
 
     // Routing

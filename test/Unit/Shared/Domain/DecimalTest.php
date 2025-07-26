@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Shared\Domain\ValueObject\Decimal;
 use Throwable;
 
-final class AmountTest extends TestCase
+final class DecimalTest extends TestCase
 {
     #[Test]
     public function canNotCreateBigIntFromStringInInvalidState(): void
