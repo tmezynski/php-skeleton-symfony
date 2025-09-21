@@ -15,7 +15,7 @@ final readonly class MessengerCommandBus implements CommandBus
     {
     }
 
-    public function execute(AsyncCommand|SyncCommand $command): void
+    public function dispatch(AsyncCommand|SyncCommand $command): void
     {
         $this->messageBus->dispatch($command);
     }

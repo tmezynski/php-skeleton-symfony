@@ -9,5 +9,5 @@ use Shared\Application\Command\SyncCommand;
 
 interface CommandBus
 {
-    public function execute(AsyncCommand|SyncCommand $command): void;
+    public function dispatch(AsyncCommand|SyncCommand $command): void;
 }

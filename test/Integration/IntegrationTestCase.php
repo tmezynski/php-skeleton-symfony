@@ -7,8 +7,8 @@ namespace Test\Integration;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Assert;
 use Shared\Application\Clock\Clock;
-use Shared\Infrastructure\Clock\FixedClock;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Test\Utils\TestDoubles\FixedClock;
 
 abstract class IntegrationTestCase extends KernelTestCase
 {

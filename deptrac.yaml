@@ -23,10 +23,6 @@ parameters:
       collectors:
         - type: classLike
           value: ^(Symfony|Doctrine)\\.*
-    - name: Psr
-      collectors:
-        - type: classLike
-          value: Psr\\.*
     - name: Utils
       collectors:
         - type: classNameRegex

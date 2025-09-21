@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shared\Domain\ValueObject;
 
 use InvalidArgumentException;
+use Shared\Domain\ValueObject\Decimal\Decimal;
 
 final readonly class Money
 {
@@ -74,7 +75,7 @@ final readonly class Money
     {
         return sprintf(
             '%s %s',
-            $this->amount->round($this->currency->fraction()),
+            $this->amount->round($this->currency->fraction())->toString(),
             $this->currency->name,
         );
     }
@@ -85,7 +86,7 @@ final readonly class Money
     public function toMemento(): array
     {
         return [
-            'amount' => (string)$this->amount,
+            'amount' => $this->amount->toString(),
             'currency' => $this->currency->name,
         ];
     }
@@ -95,6 +96,6 @@ final readonly class Money
      */
     public static function fromMemento(array $data): self
     {
-        return new self(new Decimal($data['amount']), Currency::fromName($data['currency']));
+        return new self(Decimal::from($data['amount']), Currency::fromName($data['currency']));
     }
 }

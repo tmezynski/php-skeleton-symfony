@@ -1,5 +1,3 @@
-![Code Coverage Badge](./.github/coverage.svg)
-
 # Empty project template with Symfony7.3 and PHP8.4
 
 ## Installation

@@ -21,12 +21,13 @@ final readonly class MessengerQueryBus implements QueryBus
         $this->queryBus = $queryBus;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function execute(AsyncQuery|SyncQuery $query): QueryResult
+    public function dispatch(AsyncQuery|SyncQuery $query): ?QueryResult
     {
         $envelope = $this->queryBus->dispatch($query);
+
+        if ($query instanceof AsyncQuery) {
+            return null;
+        }
 
         /** @var HandledStamp $handledStamp */
         $handledStamp = $envelope->last(HandledStamp::class);

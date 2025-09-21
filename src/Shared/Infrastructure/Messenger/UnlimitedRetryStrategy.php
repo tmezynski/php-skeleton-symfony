@@ -10,7 +10,7 @@ use Throwable;
 
 final class UnlimitedRetryStrategy implements RetryStrategyInterface
 {
-    private const DELAY_MILLISECONDS = 5000; // 5s
+    private const int DELAY_MILLISECONDS = 5000; // 5s
 
     public function isRetryable(Envelope $message, ?Throwable $throwable = null): bool
     {

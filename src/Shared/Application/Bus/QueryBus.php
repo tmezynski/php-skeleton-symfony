@@ -9,5 +9,5 @@ use Shared\Application\Query\SyncQuery;
 
 interface QueryBus
 {
-    public function execute(AsyncQuery|SyncQuery $query): QueryResult;
+    public function dispatch(AsyncQuery|SyncQuery $query): ?QueryResult;
 }

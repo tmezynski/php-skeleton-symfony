@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Shared\Application\Clock\Clock;
-use Shared\Infrastructure\Clock\FixedClock;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Test\Utils\TestDoubles\FixedClock;
 
 // @formatter:off
 return static function (ContainerConfigurator $container): void {

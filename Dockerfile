@@ -1,7 +1,7 @@
 FROM nginx:alpine AS nginx
 
 ENV TZ=UTC
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
 
 COPY ./public /app/public
 
@@ -21,27 +21,28 @@ RUN rm -rf /var/cache/apk/*
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
-COPY build/php/php.ini $PHP_INI_DIR/conf.d/php.ini
+COPY build/php/php.ini "$PHP_INI_DIR"/conf.d/php.ini
 
 RUN install-php-extensions \
     bcmath \
     pdo \
-    pdo_pgsql \
-    && rm -rf /tmp/*
+    pdo_pgsql; \
+    rm -rf /tmp/*;
 
 FROM base AS vendor
 
 WORKDIR /build
 
-COPY composer* ./
-COPY symfony.* ./
+COPY composer.json ./
+COPY composer.lock ./
+COPY symfony.lock ./
 
 RUN set -aux; \
     composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progres --no-dev --no-interaction
 
 FROM base AS runtime-production
 
-COPY build/php/php-opcache.ini $PHP_INI_DIR/php-opcache.ini
+COPY build/php/php-opcache.ini "$PHP_INI_DIR"/php-opcache.ini
 
 COPY ./ /app
 COPY --from=vendor /build/vendor /app/vendor
@@ -51,24 +52,23 @@ WORKDIR /app
 
 RUN set -eux; \
     composer dump-autoload --optimize; \
-    compsoer run-script post-install-cmd
-
-RUN chown -R www-data:www-data /app/var
-RUN chown -R www-data:www-data /app/vendor
+    compsoer run-script post-install-cmd; \
+    chown -R www-data:www-data /app/var; \
+    chown -R www-data:www-data /app/vendor;
 
 USER www-data
 
 FROM base AS runtime-development
 ARG USER_ID
 
-COPY build/php/php-dev.ini $PHP_INI_DIR/php-dev.ini
+COPY build/php/php-dev.ini "$PHP_INI_DIR"/php-dev.ini
 
 RUN set -eux; \
     install-php-extensions \
         xdebug-3.4.1; \
-    rm -rf /tmp/*
+    rm -rf /tmp/*; \
+    adduser -D -H -u "$USER_ID" -G www-data local;
 
-RUN adduser -D -H -u ${USER_ID} -G www-data local
 USER local
 
 WORKDIR /app

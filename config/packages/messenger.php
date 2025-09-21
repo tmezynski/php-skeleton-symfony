@@ -11,18 +11,28 @@ use Shared\Domain\Event\SyncEvent;
 use Shared\Infrastructure\Messenger\UnlimitedRetryStrategy;
 use Symfony\Config\FrameworkConfig;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+
 // @formatter:off
 return static function (FrameworkConfig $framework): void {
+    // @formatter:on
     $messenger = $framework->messenger();
 
     // Bus
     $messenger
-        ->defaultBus('bus');
+        ->defaultBus('commandBus');
 
     $messenger
-        ->bus('bus')
+        ->bus('commandBus')
         ->middleware('doctrine_ping_connection')
         ->middleware('doctrine_transaction');
+
+    $messenger
+        ->bus('eventBus')
+        ->defaultMiddleware('allow_no_handlers');
+
+    $messenger
+        ->bus('queryBus');
 
     // Transports
     $messenger
@@ -31,37 +41,47 @@ return static function (FrameworkConfig $framework): void {
 
     $messenger
         ->transport('db')
-        ->dsn('%env(resolve:DOCTRINE_TRANSPORT_DSN)%')
-        ->options(['table_name' => 'queues.messages'])
+        ->dsn(env('MESSENGER_DOCTRINE_TRANSPORT'))
+        ->options(['table_name' => 'queues.messages', 'queue_name' => 'shared', 'auto_setup' => false])
+        ->failureTransport('db_failed')
+        ->retryStrategy()
+        ->maxRetries(3)
+        ->delay(1)
+        ->multiplier(1);
+
+    $messenger
+        ->transport('db_failed')
+        ->dsn(env('MESSENGER_DOCTRINE_TRANSPORT'))
+        ->options(['table_name' => 'queues.messages', 'queue_name' => 'shared', 'auto_setup' => false])
         ->retryStrategy(['service' => UnlimitedRetryStrategy::class]);
 
     $messenger
-        ->transport('db_log')
-        ->dsn('%env(resolve:DOCTRINE_TRANSPORT_DSN)%')
-        ->options(['table_name' => 'queues.messages_log']);
+        ->transport('audit')
+        ->dsn(env('MESSENGER_DOCTRINE_TRANSPORT'))
+        ->options(['table_name' => 'queues.messages_log', 'queue_name' => 'shared', 'auto_setup' => false]);
 
     // Routing
     $messenger
         ->routing(SyncCommand::class)
-        ->senders(['db_log', 'sync']);
+        ->senders(['audit', 'sync']);
 
     $messenger
         ->routing(SyncQuery::class)
-        ->senders(['db_log', 'sync']);
+        ->senders(['sync']);
 
     $messenger
         ->routing(SyncEvent::class)
-        ->senders(['db_log', 'sync']);
+        ->senders(['audit', 'sync']);
 
     $messenger
         ->routing(AsyncCommand::class)
-        ->senders(['db_log', 'sync']);
+        ->senders(['audit', 'db']);
 
     $messenger
         ->routing(AsyncQuery::class)
-        ->senders(['db_log', 'sync']);
+        ->senders(['audit', 'db']);
 
     $messenger
         ->routing(AsyncEvent::class)
-        ->senders(['db_log', 'sync']);
+        ->senders(['audit', 'db']);
 };

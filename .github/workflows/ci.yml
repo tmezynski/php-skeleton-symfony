@@ -10,7 +10,6 @@ on:
 
 jobs:
     build:
-        if: "!contains(github.event.head_commit.message, 'SKIP-CI')"
         name: Automated tests
         runs-on: ubuntu-latest
         services:

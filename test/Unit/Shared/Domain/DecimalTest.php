@@ -10,32 +10,35 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shared\Domain\ValueObject\Decimal;
+use Shared\Domain\ValueObject\Decimal\Decimal;
 use Throwable;
 
 final class DecimalTest extends TestCase
 {
     #[Test]
-    public function canNotCreateBigIntFromStringInInvalidState(): void
+    public function cannotCreateDecimalFromInvalidString(): void
     {
-        $amount = null;
+        $this->expectException(InvalidArgumentException::class);
 
-        try {
-            $amount = new Decimal('abc');
-        } catch (Throwable) {
-        }
-        Assert::assertNull($amount);
+        Decimal::from('abc');
     }
 
     #[Test]
-    #[DataProvider('validStateStringDataProvider')]
-    public function createBigIntFromStringInValidState(string $value, string $result): void
+    public function cannotCreateDecimalFromInvalidValue(): void
     {
-        $amount = new Decimal($value);
-        Assert::assertEquals($result, (string) $amount);
+        $this->expectException(InvalidArgumentException::class);
+
+        Decimal::from([1]);
     }
 
-    public static function validStateStringDataProvider(): Generator
+    #[Test]
+    #[DataProvider('validDecimalDataProvider')]
+    public function canCreateDecimalFromValue(float|int|string $value, string $result): void
+    {
+        Assert::assertEquals($result, Decimal::from($value)->toString());
+    }
+
+    public static function validDecimalDataProvider(): Generator
     {
         yield ['-145,00', '-145.00'];
 
@@ -56,15 +59,31 @@ final class DecimalTest extends TestCase
         yield ['1223.9456', '1223.9456'];
 
         yield ['1223,9456', '1223.9456'];
+
+        yield [-145.00, '-145'];
+
+        yield [-100, '-100'];
+
+        yield [-0.8, '-0.8'];
+
+        yield [-0.008, '-0.008'];
+
+        yield [-0, '0'];
+
+        yield [0, '0'];
+
+        yield [1223, '1223'];
+
+        yield [1223.9456, '1223.9456'];
     }
 
     #[Test]
     #[DataProvider('addValuesDataProvider')]
     public function addShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
-        $amount1 = new Decimal($value1);
-        $amount2 = new Decimal($value2);
-        $result = new Decimal($result);
+        $amount1 = Decimal::from($value1);
+        $amount2 = Decimal::from($value2);
+        $result = Decimal::from($result);
 
         Assert::assertTrue($result->equals($amount1->add($amount2)));
         Assert::assertTrue($result->equals($amount2->add($amount1)));
@@ -89,9 +108,9 @@ final class DecimalTest extends TestCase
     #[DataProvider('subValuesDataProvider')]
     public function subShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
-        $amount1 = new Decimal($value1);
-        $amount2 = new Decimal($value2);
-        $result = new Decimal($result);
+        $amount1 = Decimal::from($value1);
+        $amount2 = Decimal::from($value2);
+        $result = Decimal::from($result);
 
         Assert::assertTrue($result->equals($amount1->sub($amount2)));
     }
@@ -119,9 +138,9 @@ final class DecimalTest extends TestCase
     #[DataProvider('mulValuesDataProvider')]
     public function mulShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
-        $amount1 = new Decimal($value1);
-        $amount2 = new Decimal($value2);
-        $result = new Decimal($result);
+        $amount1 = Decimal::from($value1);
+        $amount2 = Decimal::from($value2);
+        $result = Decimal::from($result);
 
         Assert::assertTrue($result->equals($amount1->mul($amount2)));
     }
@@ -142,7 +161,7 @@ final class DecimalTest extends TestCase
     #[Test]
     public function canNotDivideByZero(): void
     {
-        $zero = new Decimal('0');
+        $zero = Decimal::from('0');
 
         try {
             $result = $zero->div($zero);
@@ -156,9 +175,9 @@ final class DecimalTest extends TestCase
     #[DataProvider('divValuesDataProvider')]
     public function divShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
-        $amount1 = new Decimal($value1);
-        $amount2 = new Decimal($value2);
-        $result = new Decimal($result);
+        $amount1 = Decimal::from($value1);
+        $amount2 = Decimal::from($value2);
+        $result = Decimal::from($result);
 
         Assert::assertTrue($result->equals($amount1->div($amount2)));
     }
@@ -182,7 +201,7 @@ final class DecimalTest extends TestCase
     public function canNotRoundToNegativeFraction(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        (new Decimal('1'))->round(-1);
+        Decimal::from('1')->round(-1);
     }
 
     #[Test]
@@ -191,7 +210,7 @@ final class DecimalTest extends TestCase
     {
         $this->assertEquals(
             $result,
-            (string) (new Decimal($value))->round($precision),
+            Decimal::from($value)->round($precision)->toString(),
         );
     }
 

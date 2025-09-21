@@ -2,12 +2,9 @@
 .idea
 .github
 .vscode
-config/packages/dev
-config/packages/test
-config/services/*/dev
-config/services/*/test
 docs
 test
+dev
 var
 vendor
 .dockerignore

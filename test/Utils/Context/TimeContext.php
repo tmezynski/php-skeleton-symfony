@@ -8,7 +8,7 @@ use Behat\Behat\Context\Context;
 use DateTimeImmutable;
 use RuntimeException;
 use Shared\Application\Clock\Clock;
-use Shared\Infrastructure\Clock\FixedClock;
+use Test\Utils\TestDoubles\FixedClock;
 
 final class TimeContext implements Context
 {

@@ -26,7 +26,7 @@ down:
 
 .PHONY: logs
 logs:
-	@$(DC) logs
+	@$(DC) logs -f
 
 .PHONY: destroy
 destroy:
