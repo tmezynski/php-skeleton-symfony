@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Utils\TestDoubles;
+namespace Test\Utils\TestDoubles\Clock;
 
 use DateTimeImmutable;
 use Shared\Application\Clock\Clock;

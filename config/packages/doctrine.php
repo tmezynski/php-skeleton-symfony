@@ -14,4 +14,11 @@ return static function (DoctrineConfig $doctrine): void {
         ->connection('db')
         ->url(env('DATABASE_URL'))
         ->driver(env('DB_DRIVER'));
+
+    $doctrine
+        ->orm()
+        ->autoGenerateProxyClasses(false)
+        ->entityManager('entity_manager')
+        ->connection('db')
+        ->autoMapping(false);
 };

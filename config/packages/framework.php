@@ -8,6 +8,12 @@ use Symfony\Config\FrameworkConfig;
 
 // @formatter:off
 return static function (FrameworkConfig $framework): void {
-    $framework->secret(env('APP_SECRET'));
-    $framework->test(false);
+    $framework
+        ->secret(env('APP_SECRET'))
+        ->httpMethodOverride(false)
+        ->handleAllThrowables(true);
+
+    $framework
+        ->phpErrors()
+        ->log();
 };

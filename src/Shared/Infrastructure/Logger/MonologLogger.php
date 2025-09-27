@@ -8,16 +8,16 @@ use Shared\Application\Logger\Logger;
 
 final readonly class MonologLogger implements Logger
 {
-    public function __construct(private Logger $logger, private string $prefix)
+    public function __construct(private Logger $logger)
     {
     }
 
     /**
      * @param array<string, mixed> $context
      */
-    public function critical(string $message, array $context = []): void
+    public function debug(string $message, array $context = []): void
     {
-        $this->logger->critical($this->prefix . $message, $context);
+        $this->logger->debug($message, $context);
     }
 
     /**
@@ -25,6 +25,54 @@ final readonly class MonologLogger implements Logger
      */
     public function info(string $message, array $context = []): void
     {
-        $this->logger->info($this->prefix . $message, $context);
+        $this->logger->info($message, $context);
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function notice(string $message, array $context = []): void
+    {
+        $this->logger->notice($message, $context);
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function warning(string $message, array $context = []): void
+    {
+        $this->logger->warning($message, $context);
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function error(string $message, array $context = []): void
+    {
+        $this->logger->error($message, $context);
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function alert(string $message, array $context = []): void
+    {
+        $this->logger->alert($message, $context);
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function emergency(string $message, array $context = []): void
+    {
+        $this->logger->emergency($message, $context);
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function critical(string $message, array $context = []): void
+    {
+        $this->logger->critical($message, $context);
     }
 }
