@@ -7,6 +7,7 @@ namespace Shared\Domain\ValueObject\Money;
 use Shared\Domain\ValueObject\Currency;
 use Shared\Domain\ValueObject\Decimal\Decimal;
 use Shared\Domain\ValueObject\Decimal\InvalidDecimalException;
+use Shared\Domain\ValueObject\Enum\InvalidEnumException;
 
 final readonly class Money
 {
@@ -47,6 +48,9 @@ final readonly class Money
         return new self($this->amount->div($divisor), $this->currency);
     }
 
+    /**
+     * @throws InvalidDecimalException
+     */
     public function round(?int $precision = null): Money
     {
         if (is_null($precision)) {
@@ -62,6 +66,9 @@ final readonly class Money
             && $this->currency === $other->currency;
     }
 
+    /**
+     * @throws InvalidDecimalException
+     */
     public function equalsRounded(Money $other): bool
     {
         return $this->round()->amount->equals($other->round()->amount)
@@ -78,7 +85,10 @@ final readonly class Money
         }
     }
 
-    public function __toString(): string
+    /**
+     * @throws InvalidDecimalException
+     */
+    public function toString(): string
     {
         return sprintf(
             '%s %s',
@@ -101,7 +111,7 @@ final readonly class Money
     /**
      * @param array{'amount': string, 'currency': string} $data
      *
-     * @throws InvalidDecimalException
+     * @throws InvalidDecimalException|InvalidEnumException
      */
     public static function fromMemento(array $data): self
     {

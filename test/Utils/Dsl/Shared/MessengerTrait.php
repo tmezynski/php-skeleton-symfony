@@ -11,6 +11,9 @@ use Throwable;
 
 trait MessengerTrait
 {
+    /**
+     * @throws Throwable
+     */
     private function consumeAsyncMessage(string $transport = 'db'): void
     {
         $application = new Application($this->app);
@@ -23,14 +26,14 @@ trait MessengerTrait
                 '--limit' => 1,
                 '--time-limit' => 1,
             ]);
-        } catch (Throwable $e) {
-            throw $this->extractRealHandlerException($e) ?? $e;
+        } catch (Throwable $exception) {
+            throw $this->extractRealHandlerException($exception) ?? $exception;
         }
     }
 
-    private function extractRealHandlerException(Throwable $e): ?Throwable
+    private function extractRealHandlerException(Throwable $exception): ?Throwable
     {
-        foreach ($e->getTrace() as $trace) {
+        foreach ($exception->getTrace() as $trace) {
             $workerMessageEvent = $trace['args'][0] ?? null;
             if ($workerMessageEvent instanceof WorkerMessageFailedEvent) {
                 return $workerMessageEvent->getThrowable()->getPrevious() ?? $workerMessageEvent->getThrowable();

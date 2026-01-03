@@ -118,7 +118,7 @@ final class MoneyTest extends TestCase
     public function printMoney(): void
     {
         $money = new Money(Decimal::from('1.33332'), Currency::USD);
-        $this->assertEquals('1.33 USD', (string) $money);
+        $this->assertEquals('1.33 USD', $money->toString());
     }
 
     #[Test]

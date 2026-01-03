@@ -70,7 +70,7 @@ test: test-static test-unit test-integration test-acceptance
 
 ################################################### STATIC #############################################################
 .PHONY: test-static
-test-static: test-csfixer test-phpstan test-deptrac
+test-static: test-csfixer test-phpstan test-deptrac test-md
 
 .PHONY: fix-static
 fix-static:
@@ -87,6 +87,10 @@ test-csfixer:
 .PHONY: test-deptrac
 test-deptrac:
 	@$(DC) exec php composer test:deptrac
+
+.PHONY: test-md
+test-md:
+	@$(DC) exec php composer test:md
 
 ##################################################### UNIT #############################################################
 .PHONY: test-unit

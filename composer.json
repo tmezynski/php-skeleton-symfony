@@ -4,7 +4,7 @@
   "minimum-stability": "stable",
   "prefer-stable": true,
   "require": {
-    "php": ">=8.4",
+    "php": ">=8.5",
     "ext-bcmath": "*",
     "ext-ctype": "*",
     "ext-iconv": "*",
@@ -30,6 +30,7 @@
     "friends-of-behat/symfony-extension": "^2.6",
     "friendsofphp/php-cs-fixer": "^3.92",
     "infection/infection": "^0.32.0",
+    "phpmd/phpmd": "^2.15",
     "phpstan/phpstan": "^2.1",
     "phpstan/phpstan-symfony": "^2.0",
     "phpunit/phpunit": "^12.5",
@@ -91,6 +92,9 @@
     ],
     "test:deptrac": [
       "APP_ENV=test php -d xdebug.mode=off vendor/bin/deptrac analyse --config-file=deptrac.yaml --cache-file=var/.deptrac.cache --fail-on-uncovered --report-uncovered"
+    ],
+    "test:md": [
+      "php -d xdebug.mode=off vendor/bin/phpmd src,test text phpmd.xml"
     ],
     "test:unit": [
       "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit --no-coverage"
