@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shared\Domain\ValueObject;
+namespace Shared\Domain\ValueObject\Money;
 
-use InvalidArgumentException;
+use Shared\Domain\ValueObject\Currency;
 use Shared\Domain\ValueObject\Decimal\Decimal;
+use Shared\Domain\ValueObject\Decimal\InvalidDecimalException;
 
 final readonly class Money
 {
@@ -13,6 +14,9 @@ final readonly class Money
     {
     }
 
+    /**
+     * @throws DifferentCurrencyException
+     */
     public function add(Money $other): Money
     {
         $this->assertSameCurrency($other);
@@ -20,6 +24,9 @@ final readonly class Money
         return new self($this->amount->add($other->amount), $this->currency);
     }
 
+    /**
+     * @throws DifferentCurrencyException
+     */
     public function sub(Money $other): Money
     {
         $this->assertSameCurrency($other);
@@ -33,7 +40,7 @@ final readonly class Money
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidDecimalException
      */
     public function div(Decimal $divisor): Money
     {
@@ -62,12 +69,12 @@ final readonly class Money
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws DifferentCurrencyException
      */
     private function assertSameCurrency(Money $other): void
     {
         if ($this->currency !== $other->currency) {
-            throw new InvalidArgumentException('Currencies must match');
+            throw new DifferentCurrencyException($this->currency->name, $other->currency->name);
         }
     }
 
@@ -93,6 +100,8 @@ final readonly class Money
 
     /**
      * @param array{'amount': string, 'currency': string} $data
+     *
+     * @throws InvalidDecimalException
      */
     public static function fromMemento(array $data): self
     {

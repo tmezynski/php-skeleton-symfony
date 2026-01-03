@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Shared\UserInterface;
+namespace Test\Integration\Shared\UserInterface;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\Test;

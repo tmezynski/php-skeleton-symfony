@@ -13,11 +13,11 @@ return static function (DoctrineConfig $doctrine): void {
         ->dbal()
         ->connection('db')
         ->url(env('DATABASE_URL'))
-        ->driver(env('DB_DRIVER'));
+        ->driver(env('DB_DRIVER'))
+        ->mappingType('enum', 'string');
 
     $doctrine
         ->orm()
-        ->autoGenerateProxyClasses(false)
         ->entityManager('entity_manager')
         ->connection('db')
         ->autoMapping(false);

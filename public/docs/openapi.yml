@@ -13,10 +13,10 @@ security:
     - someAuth: [ ]
 
 paths:
-    /health-check:
+    /nginx-health-check:
         get:
-            summary: Health check
-            description: Health check
+            summary: Nginx health check
+            description: Nginx container health check
             responses:
                 200:
                     $ref: '#/components/responses/Ok'

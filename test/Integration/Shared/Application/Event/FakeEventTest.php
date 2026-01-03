@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Shared\Application\Event;
+namespace Test\Integration\Shared\Application\Event;
 
 use PHPUnit\Framework\Attributes\Test;
 use Test\Integration\IntegrationTestCase;
