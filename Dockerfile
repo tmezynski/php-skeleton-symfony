@@ -11,7 +11,7 @@ RUN rm /var/log/nginx/access.log && rm /var/log/nginx/error.log
 
 WORKDIR /app
 
-FROM php:8.4.16-fpm-alpine3.23 AS base
+FROM php:8.5.2RC1-fpm-alpine3.23 AS base
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
