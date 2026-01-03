@@ -10,10 +10,10 @@ use Shared\Application\Bus\CommandBus;
 use Shared\Application\Command\AsyncCommand;
 use Shared\Application\Command\SyncCommand;
 use Test\Utils\TestDoubles\Bus\TraceableMessengerCommandBus;
+use Throwable;
 
 trait CommandBusTrait
 {
-    use MessengerTrait;
     use EventBusTrait;
 
     /**
@@ -21,6 +21,9 @@ trait CommandBusTrait
      */
     private array $givenCommands = [];
 
+    /**
+     * @throws Throwable
+     */
     public function whenTheCommandIsHandled(AsyncCommand|SyncCommand $command): void
     {
         $this->getCommandBus()->dispatch($command);

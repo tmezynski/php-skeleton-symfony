@@ -15,6 +15,6 @@ final readonly class FakeCommandHandler
 
     public function __invoke(FakeCommand $command): void
     {
-        $this->eventBus->dispatch(new FakeEvent());
+        $this->eventBus->dispatch(new FakeEvent($command->value));
     }
 }

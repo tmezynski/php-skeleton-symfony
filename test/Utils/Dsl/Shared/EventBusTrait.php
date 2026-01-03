@@ -10,6 +10,7 @@ use Shared\Application\Bus\EventBus;
 use Shared\Domain\Event\AsyncEvent;
 use Shared\Domain\Event\SyncEvent;
 use Test\Utils\TestDoubles\Bus\TraceableMessengerEventBus;
+use Throwable;
 
 trait EventBusTrait
 {
@@ -20,6 +21,9 @@ trait EventBusTrait
      */
     private array $givenEvents = [];
 
+    /**
+     * @throws Throwable
+     */
     public function whenTheEventIsHandled(AsyncEvent|SyncEvent $event): void
     {
         $this->getTraceableBus()->dispatch($event);

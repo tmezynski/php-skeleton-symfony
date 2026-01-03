@@ -10,7 +10,7 @@ on:
 
 jobs:
     build:
-        name: Automated tests
+        name: Tests
         runs-on: ubuntu-latest
         services:
             postgres:
@@ -58,6 +58,9 @@ jobs:
 
             -   name: Run deptrac
                 run: composer test:deptrac
+
+            -   name: Run PHP mess detector
+                run: composer test:md
 
             -   name: Unit tests
                 run: composer test:unit

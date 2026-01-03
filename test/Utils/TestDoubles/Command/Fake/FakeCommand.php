@@ -6,6 +6,9 @@ namespace Test\Utils\TestDoubles\Command\Fake;
 
 use Shared\Application\Command\SyncCommand;
 
-final class FakeCommand implements SyncCommand
+final readonly class FakeCommand implements SyncCommand
 {
+    public function __construct(public int $value)
+    {
+    }
 }

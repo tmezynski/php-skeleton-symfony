@@ -8,8 +8,6 @@ parameters:
     maximumNumberOfProcesses: 8
     processTimeout: 300.0
   paths:
-    - bin
-    - public
     - src
     - test
   excludePaths:
