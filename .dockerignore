@@ -13,7 +13,6 @@ vendor
 .gitignore
 behat.yml
 compose.yml
-composer.lock
 deptrac.yaml
 Dockerfile
 infection.json
@@ -22,4 +21,3 @@ php-cs-fixer.php
 stan.neon
 phpunit.xml
 README.md
-symfony.lock

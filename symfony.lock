@@ -1,4 +1,16 @@
 {
+    "deptrac/deptrac": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "05ab8813714080c7bc915cb10c780e6cfdbdb991"
+        },
+        "files": [
+            "deptrac.yaml"
+        ]
+    },
     "doctrine/deprecations": {
         "version": "1.1",
         "recipe": {
@@ -80,18 +92,6 @@
             "bin/phpunit"
         ]
     },
-    "qossmic/deptrac": {
-        "version": "2.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "2.0",
-            "ref": "05ab8813714080c7bc915cb10c780e6cfdbdb991"
-        },
-        "files": [
-            "deptrac.yaml"
-        ]
-    },
     "symfony/console": {
         "version": "7.3",
         "recipe": {
@@ -160,6 +160,15 @@
         "files": [
             "config/packages/monolog.yaml"
         ]
+    },
+    "symfony/phpunit-bridge": {
+        "version": "8.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.3",
+            "ref": "dc13fec96bd527bd399c3c01f0aab915c67fd544"
+        }
     },
     "symfony/property-info": {
         "version": "7.3",

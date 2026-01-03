@@ -14,11 +14,12 @@ jobs:
         runs-on: ubuntu-latest
         services:
             postgres:
-                image: postgres
+                image: postgres:18.1-alpine3.23
                 env:
                     POSTGRES_DB: skeleton_test
                     POSTGRES_USER: user
                     POSTGRES_PASSWORD: password
+                    POSTGRES_INITDB_ARGS: "--locale=pl_PL.UTF-8"
                 options: >-
                     --health-cmd pg_isready
                     --health-interval 2s

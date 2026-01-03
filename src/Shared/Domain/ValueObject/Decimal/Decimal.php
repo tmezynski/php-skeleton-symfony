@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shared\Domain\ValueObject\Decimal;
 
-use InvalidArgumentException;
-
 final readonly class Decimal
 {
     private const int MIN_FRACTION_ACCURACY = 8;
@@ -17,7 +15,7 @@ final readonly class Decimal
     private string $value;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidDecimalException
      */
     private function __construct(string $value)
     {
@@ -28,6 +26,9 @@ final readonly class Decimal
         $this->value = '-0' !== $value ? $value : '0';
     }
 
+    /**
+     * @throws InvalidDecimalException
+     */
     public static function from(mixed $value): self
     {
         if (is_float($value) || is_int($value)) {
@@ -38,7 +39,7 @@ final readonly class Decimal
             return new self($value);
         }
 
-        throw new InvalidArgumentException();
+        throw InvalidDecimalException::invalidType();
     }
 
     public function add(Decimal $other): Decimal
@@ -57,12 +58,12 @@ final readonly class Decimal
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidDecimalException
      */
     public function div(Decimal $other): Decimal
     {
         if ('0' === $other->toString()) {
-            throw new InvalidArgumentException('Division by zero');
+            throw InvalidDecimalException::divisionByZero();
         }
 
         return new self(bcdiv($this->toString(), $other->toString(), $this->getFractionFromValues($this, $other)));
@@ -73,12 +74,13 @@ final readonly class Decimal
         return 0 === bccomp($this->toString(), $other->toString(), $this->getFractionFromValues($this, $other));
     }
 
+    /**
+     * @throws InvalidDecimalException
+     */
     public function round(int $precision): self
     {
         if ($precision < 0) {
-            throw new InvalidArgumentException(
-                sprintf('Invalid value for precision: %s. Should be greater than 0.', $precision),
-            );
+            throw InvalidDecimalException::notValidPrecision($precision);
         }
 
         return self::from(round((float) $this->toString(), $precision));
@@ -92,10 +94,13 @@ final readonly class Decimal
         return $this->value;
     }
 
+    /**
+     * @throws InvalidDecimalException
+     */
     private function assertValidValue(string $value): void
     {
         if (false === filter_var($value, FILTER_VALIDATE_FLOAT)) {
-            throw new InvalidArgumentException(sprintf('Invalid value for amount: %s', $value));
+            throw InvalidDecimalException::notValidDecimalString($value);
         }
     }
 

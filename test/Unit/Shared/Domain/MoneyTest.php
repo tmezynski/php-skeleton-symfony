@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Test\Unit\Shared\Domain;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shared\Domain\ValueObject\Currency;
 use Shared\Domain\ValueObject\Decimal\Decimal;
-use Shared\Domain\ValueObject\Money;
+use Shared\Domain\ValueObject\Money\DifferentCurrencyException;
+use Shared\Domain\ValueObject\Money\Money;
 
 final class MoneyTest extends TestCase
 {
@@ -19,7 +19,7 @@ final class MoneyTest extends TestCase
         $usd = new Money(Decimal::from('1'), Currency::USD);
         $gbp = new Money(Decimal::from('4'), Currency::GBP);
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DifferentCurrencyException::class);
         $usd->add($gbp);
     }
 
@@ -49,7 +49,7 @@ final class MoneyTest extends TestCase
         $usd = new Money(Decimal::from('1'), Currency::USD);
         $gbp = new Money(Decimal::from('4'), Currency::GBP);
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DifferentCurrencyException::class);
         $usd->sub($gbp);
     }
 

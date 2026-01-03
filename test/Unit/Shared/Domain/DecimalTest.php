@@ -5,28 +5,28 @@ declare(strict_types=1);
 namespace Test\Unit\Shared\Domain;
 
 use Generator;
-use InvalidArgumentException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shared\Domain\ValueObject\Decimal\Decimal;
+use Shared\Domain\ValueObject\Decimal\InvalidDecimalException;
 use Throwable;
 
 final class DecimalTest extends TestCase
 {
     #[Test]
-    public function cannotCreateDecimalFromInvalidString(): void
+    public function canNotCreateDecimalFromInvalidString(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidDecimalException::class);
 
         Decimal::from('abc');
     }
 
     #[Test]
-    public function cannotCreateDecimalFromInvalidValue(): void
+    public function canNotCreateDecimalFromInvalidValue(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidDecimalException::class);
 
         Decimal::from([1]);
     }
@@ -200,7 +200,7 @@ final class DecimalTest extends TestCase
     #[Test]
     public function canNotRoundToNegativeFraction(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidDecimalException::class);
         Decimal::from('1')->round(-1);
     }
 

@@ -8,7 +8,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shared\Domain\ValueObject\Currency;
-use ValueError;
+use Shared\Domain\ValueObject\Enum\InvalidEnumException;
 
 final class CurrencyTest extends TestCase
 {
@@ -23,7 +23,7 @@ final class CurrencyTest extends TestCase
     #[Test]
     public function cannotCreateCurrencyFromInvalidNameWithHardCheck(): void
     {
-        $this->expectException(ValueError::class);
+        $this->expectException(InvalidEnumException::class);
         Currency::fromName('ABC');
     }
 

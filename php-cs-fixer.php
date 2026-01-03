@@ -13,13 +13,13 @@ return (new Config())
         (new Finder())
             ->in(__DIR__)
             ->exclude([
-                'build',
                 '.github',
-                'build',
+                '.docker',
                 'docs',
                 'var',
                 'vendor',
-            ]),
+            ])
+            ->notPath('config/reference.php'),
     )
     ->setHideProgress(true)
     ->setCacheFile('var/php-cs-fixer.cache')

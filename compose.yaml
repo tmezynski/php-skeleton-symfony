@@ -36,12 +36,13 @@ services:
     command: [ './bin/console', 'messenger:consume', '--no-interaction', '--memory-limit=512M', '--time-limit=300', 'db' ]
 
   db:
-    image: postgres:16-alpine
+    image: postgres:18.1-alpine3.23
     hostname: "${DOCKER_PROJECT_NAME}-db"
     restart: unless-stopped
     environment:
       - POSTGRES_DB=skeleton
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
+      - POSTGRES_INITDB_ARGS="--locale=pl_PL.UTF-8"
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
