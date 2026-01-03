@@ -59,7 +59,7 @@ jobs:
             -   name: Run deptrac
                 run: composer test:deptrac
 
-            -   name: Run PHP mess detector
+            -   name: Run mess detector
                 run: composer test:md
 
             -   name: Unit tests
