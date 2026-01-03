@@ -1,4 +1,4 @@
-# Empty project template with Symfony7.3 and PHP8.4
+# Empty project template with Symfony7.4 and PHP8.4
 
 ## Installation
 
