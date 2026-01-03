@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Unit\Shared\Domain;
+namespace Test\Unit\Shared\Domain\ValueObject;
 
 use Generator;
 use PHPUnit\Framework\Assert;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Unit\Shared\Domain;
+namespace Test\Unit\Shared\Domain\Model;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\Test;
