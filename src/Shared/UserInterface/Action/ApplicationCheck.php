@@ -6,7 +6,7 @@ namespace Shared\UserInterface\Action;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-final readonly class AppCheck
+final readonly class ApplicationCheck
 {
     public function __invoke(): JsonResponse
     {

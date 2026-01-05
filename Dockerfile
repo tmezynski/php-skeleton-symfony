@@ -50,7 +50,7 @@ RUN rm -rf /app/.docker
 WORKDIR /app
 
 RUN set -eux; \
-    composer dump-autoload --optimize; \
+    composer dump-autoload --no-dev --classmap-authoritative --optimize; \
     composer run-script post-install-cmd; \
     chown -R www-data:www-data /app/var; \
     chown -R www-data:www-data /app/vendor;

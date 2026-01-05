@@ -32,7 +32,6 @@ final class Kernel extends BaseKernel
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
         $configDir = $this->getConfigDir();
-        $routes->import(sprintf('%s/{routes}/*.php', $configDir));
-        $routes->import(sprintf('%s/{routes}/%s/*.php', $configDir, $this->environment));
+        $routes->import(sprintf('%s/{routes}/*/*.php', $configDir));
     }
 }
