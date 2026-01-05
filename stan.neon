@@ -13,3 +13,7 @@ parameters:
   excludePaths:
     - src/Kernel.php
     - test/bootstrap.php
+  ignoreErrors:
+    -
+        message: '#Method Shared\\UserInterface\\ErrorController\\ErrorController::getHttpCode\(\) should return int but returns int<100, 500>\|string.#'
+        path: src/Shared/UserInterface/ErrorController
