@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Shared\Infrastructure\Logger;
 
+use Psr\Log\LoggerInterface;
 use Shared\Application\Logger\Logger;
 
 final readonly class MonologLogger implements Logger
 {
-    public function __construct(private Logger $logger)
+    public function __construct(private LoggerInterface $logger)
     {
     }
 

@@ -9,12 +9,12 @@ use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Request;
 use Test\Integration\IntegrationTestCase;
 
-final class HealthCheckTest extends IntegrationTestCase
+final class AppStatusTest extends IntegrationTestCase
 {
     #[Test]
     public function canReachHealthCheckEndpoint(): void
     {
-        $response = $this->app->handle(Request::create('/app-check'));
+        $response = $this->app->handle(Request::create('/monitoring/application'));
 
         Assert::assertEquals(200, $response->getStatusCode());
     }
