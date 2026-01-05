@@ -27,6 +27,7 @@ final class TestRequest
     public function assertTheResponseIsNotFound(): self
     {
         Assert::notNull($this->response);
+        var_dump($this->response->getContent());
         Assert::eq($this->response->getStatusCode(), Response::HTTP_NOT_FOUND);
 
         return $this;

@@ -23,6 +23,7 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 COPY .docker/php/php.ini "$PHP_INI_DIR"/conf.d/php.ini
 
 RUN install-php-extensions \
+    http \
     bcmath \
     pdo \
     pdo_pgsql; \

@@ -51,7 +51,6 @@ sh:
 .PHONY: cc
 cc:
 	@$(DC) exec php sh -c 'rm -rf /app/var/cache'
-	@$(DC) exec php composer cache:clear
 	@$(DC) exec php composer dump-autoload
 
 .PHONY: clear-logs
