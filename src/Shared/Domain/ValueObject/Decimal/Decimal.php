@@ -32,14 +32,14 @@ final readonly class Decimal
     public static function from(mixed $value): self
     {
         if (is_float($value) || is_int($value)) {
-            return new self((string) $value);
+            return new self((string)$value);
         }
 
         if (is_string($value)) {
             return new self($value);
         }
 
-        throw InvalidDecimalException::invalidType();
+        throw InvalidDecimalException::invalidType($value);
     }
 
     public function add(Decimal $other): Decimal
@@ -83,7 +83,7 @@ final readonly class Decimal
             throw InvalidDecimalException::notValidPrecision($precision);
         }
 
-        return self::from(round((float) $this->toString(), $precision));
+        return self::from(round((float)$this->toString(), $precision));
     }
 
     /**

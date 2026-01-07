@@ -1,43 +1,55 @@
 parameters:
-  paths:
-    - src
-  layers:
-    - name: SharedApplication
-      collectors:
-        - type: classLike
-          value: Shared\\Application
-    - name: SharedDomain
-      collectors:
-        - type: classLike
-          value: Shared\\Domain
-    - name: SharedInfrastructure
-      collectors:
-        - type: classLike
-          value: Shared\\Infrastructure
-    - name: SharedUserInterface
-      collectors:
-        - type: classLike
-          value: Shared\\Ui
+    paths:
+        - src
+    layers:
+        -   name: SharedApplication
+            collectors:
+                -   type: classLike
+                    value: Shared\\Application
+        -   name: SharedDomain
+            collectors:
+                -   type: classLike
+                    value: Shared\\Domain
+        -   name: SharedInfrastructure
+            collectors:
+                -   type: classLike
+                    value: Shared\\Infrastructure
+        -   name: SharedUserInterface
+            collectors:
+                -   type: classLike
+                    value: Shared\\Ui
 
-    - name: Symfony
-      collectors:
-        - type: classLike
-          value: ^(Symfony|Doctrine)\\.*
-    - name: Utils
-      collectors:
-        - type: classNameRegex
-          value: '#(Ramsey|GuzzleHttp|Psr).*#'
+        -   name: Utils
+            collectors:
+                -   type: classLike
+                    value: Utils\\
 
-  ruleset:
-    SharedDomain:
-      - Utils
-    SharedApplication:
-      - SharedDomain
-    SharedInfrastructure:
-      - SharedDomain
-      - SharedApplication
-      - Symfony
-      - Utils
-    SharedUserInterface:
-      - SharedApplication
-      - Symfony
+        -   name: Symfony
+            collectors:
+                -   type: classLike
+                    value: ^(Symfony|Doctrine)\\.*
+        -   name: Vendor
+            collectors:
+                -   type: classNameRegex
+                    value: '#(Ramsey|GuzzleHttp|Psr|PhpParser|PHPStan).*#'
+
+    ruleset:
+        Utils:
+            - Vendor
+            - Symfony
+        SharedDomain:
+            - Vendor
+            - Utils
+        SharedApplication:
+            - SharedDomain
+            - Utils
+        SharedInfrastructure:
+            - SharedDomain
+            - SharedApplication
+            - Symfony
+            - Vendor
+            - Utils
+        SharedUserInterface:
+            - SharedApplication
+            - Symfony
+            - Utils

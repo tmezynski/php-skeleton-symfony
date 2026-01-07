@@ -8,8 +8,8 @@ use Shared\Application\Query\AsyncQuery;
 use Shared\Application\Query\SyncQuery;
 use Shared\Domain\Event\AsyncEvent;
 use Shared\Domain\Event\SyncEvent;
-use Shared\Infrastructure\Messenger\UnlimitedRetryStrategy;
 use Symfony\Config\FrameworkConfig;
+use Utils\Messenger\UnlimitedRetryStrategy;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 

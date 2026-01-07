@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Shared\UserInterface\Action\ApplicationCheck;
-use Shared\UserInterface\Action\SentryCheck;
+use Shared\UserInterface\Action\Monitoring\ApplicationCheck;
+use Shared\UserInterface\Action\Monitoring\SentryCheck;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 // @formatter:off

@@ -4,6 +4,8 @@
         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
         bootstrap="test/bootstrap.php"
         cacheDirectory="var/.phpunit.cache"
+        stopOnFailure="false"
+        failOnWarning="true"
 >
     <php>
         <ini name="display_errors" value="1"/>

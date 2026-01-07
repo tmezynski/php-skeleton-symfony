@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Shared\UserInterface\ErrorController\ErrorController;
 use Symfony\Config\FrameworkConfig;
+use Utils\ErrorController\ErrorController;
 
 // @formatter:off
 return static function (FrameworkConfig $framework): void {

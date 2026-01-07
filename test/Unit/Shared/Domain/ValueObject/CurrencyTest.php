@@ -8,7 +8,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shared\Domain\ValueObject\Currency;
-use Shared\Domain\ValueObject\Enum\InvalidEnumException;
+use Utils\Enum\InvalidEnumException;
 
 final class CurrencyTest extends TestCase
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shared\UserInterface\ErrorController;
+namespace Utils\ErrorController;
 
 use ReflectionClass;
-use Shared\Domain\Exception\DetailedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Utils\Exception\DetailedException;
 
 final readonly class ErrorController
 {

@@ -7,7 +7,7 @@ namespace Shared\Domain\ValueObject\Money;
 use Shared\Domain\ValueObject\Currency;
 use Shared\Domain\ValueObject\Decimal\Decimal;
 use Shared\Domain\ValueObject\Decimal\InvalidDecimalException;
-use Shared\Domain\ValueObject\Enum\InvalidEnumException;
+use Utils\Enum\InvalidEnumException;
 
 final readonly class Money
 {

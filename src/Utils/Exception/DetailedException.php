@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shared\Domain\Exception;
+namespace Utils\Exception;
 
 use Exception;
 
