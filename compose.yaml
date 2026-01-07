@@ -1,53 +1,53 @@
 x-local-config: &php_template
-  build:
-    context: .
-    target: runtime-development
-    args:
-      - USER_ID
-  restart: unless-stopped
-  environment:
-    - PHP_IDE_CONFIG=serverName=${SERVER_NAME}
-  volumes:
-    - ./:/app
-  extra_hosts:
-    - host.docker.internal:host-gateway
-  depends_on:
-    - db
-
-services:
-  nginx:
     build:
-      context: .
-      target: nginx
-    hostname: "${DOCKER_PROJECT_NAME}-nginx"
-    restart: unless-stopped
-    ports:
-      - "${HTTP_PORT:-80}:80"
-    depends_on:
-      - php
-
-  php:
-    <<: *php_template
-    hostname: "${DOCKER_PROJECT_NAME}-php"
-
-  messenger-consumer:
-    <<: *php_template
-    hostname: "${DOCKER_PROJECT_NAME}-consumer"
-    command: [ './bin/console', 'messenger:consume', '--no-interaction', '--memory-limit=512M', '--time-limit=300', 'db' ]
-
-  db:
-    image: postgres:18.1-alpine3.23
-    hostname: "${DOCKER_PROJECT_NAME}-db"
+        context: .
+        target: runtime-development
+        args:
+            - USER_ID
     restart: unless-stopped
     environment:
-      - POSTGRES_DB=skeleton
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_INITDB_ARGS="--locale=pl_PL.UTF-8"
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
-      interval: 1s
-      timeout: 1s
-      retries: 30
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+        - PHP_IDE_CONFIG=serverName=${SERVER_NAME}
+    volumes:
+        - ./:/app
+    extra_hosts:
+        - host.docker.internal:host-gateway
+    depends_on:
+        - db
+
+services:
+    nginx:
+        build:
+            context: .
+            target: nginx
+        hostname: "${DOCKER_PROJECT_NAME}-nginx"
+        restart: unless-stopped
+        ports:
+            - "${HTTP_PORT:-80}:80"
+        depends_on:
+            - php
+
+    php:
+        <<: *php_template
+        hostname: "${DOCKER_PROJECT_NAME}-php"
+
+    messenger-consumer:
+        <<: *php_template
+        hostname: "${DOCKER_PROJECT_NAME}-consumer"
+        command: [ './bin/console', 'messenger:consume', '--no-interaction', '--memory-limit=128M', 'db' ]
+
+    db:
+        image: postgres:18.1-alpine3.23
+        hostname: "${DOCKER_PROJECT_NAME}-db"
+        restart: unless-stopped
+        environment:
+            - POSTGRES_DB=skeleton
+            - POSTGRES_USER=user
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_INITDB_ARGS="--locale=pl_PL.UTF-8"
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready" ]
+            interval: 1s
+            timeout: 1s
+            retries: 30
+        ports:
+            - "${POSTGRES_PORT:-5432}:5432"

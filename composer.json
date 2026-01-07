@@ -54,7 +54,8 @@
       "src/Kernel.php"
     ],
     "psr-4": {
-      "Shared\\": "src/Shared"
+      "Shared\\": "src/Shared",
+      "Utils\\": "src/Utils"
     }
   },
   "autoload-dev": {

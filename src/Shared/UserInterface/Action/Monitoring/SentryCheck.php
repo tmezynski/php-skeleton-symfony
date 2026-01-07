@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shared\UserInterface\Action;
+namespace Shared\UserInterface\Action\Monitoring;
 
 use Exception;
 use Shared\Application\Logger\Logger;

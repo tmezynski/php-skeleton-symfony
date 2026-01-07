@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shared\Domain\ValueObject\Money;
 
-use Shared\Domain\Exception\DetailedException;
-use Shared\Domain\Exception\ErrorCode;
+use Utils\Exception\DetailedException;
+use Utils\Exception\ErrorCode;
 
 final class DifferentCurrencyException extends DetailedException
 {
