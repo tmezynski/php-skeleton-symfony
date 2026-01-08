@@ -10,6 +10,7 @@ enum ErrorCode: int
 {
     use EnumTrait;
 
+    case SentryCheckException = 999;
     case CurrencyMismatch = 1000;
     case InvalidDecimalValue = 1001;
     case InvalidDecimalPrecisionValue = 1002;

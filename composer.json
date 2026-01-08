@@ -31,7 +31,7 @@
     "deptrac/deptrac": "^4.4",
     "friends-of-behat/symfony-extension": "^2.6",
     "friendsofphp/php-cs-fixer": "^3.92",
-    "infection/infection": "^0.32.0",
+    "infection/infection": "^0.32.2",
     "phpmd/phpmd": "^2.15",
     "phpstan/phpstan": "^2.1",
     "phpstan/phpstan-symfony": "^2.0",

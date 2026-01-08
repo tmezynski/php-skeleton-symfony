@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Test\Integration\Shared\UserInterface;
+namespace Test\Integration\Shared\UserInterface\Endpoint;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Request;
 use Test\Integration\IntegrationTestCase;
 
-final class AppStatusTest extends IntegrationTestCase
+final class ApplicationCheckTest extends IntegrationTestCase
 {
     #[Test]
     public function canReachHealthCheckEndpoint(): void
