@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shared\UserInterface\Action\Monitoring;
+namespace Shared\UserInterface\Endpoint\Monitoring;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 

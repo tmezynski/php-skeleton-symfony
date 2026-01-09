@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Shared\Application\Logger\Logger;
-use Shared\UserInterface\Action\Monitoring\SentryCheck;
+use Shared\UserInterface\Endpoint\Monitoring\SentryCheck\SentryCheck;
 use Utils\ErrorController\ErrorController;
 
 // @formatter:off

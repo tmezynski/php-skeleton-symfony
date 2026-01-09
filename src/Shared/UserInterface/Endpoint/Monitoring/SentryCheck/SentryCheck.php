@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Shared\UserInterface\Action\Monitoring;
+namespace Shared\UserInterface\Endpoint\Monitoring\SentryCheck;
 
-use Exception;
 use Shared\Application\Logger\Logger;
 
 final readonly class SentryCheck
@@ -17,6 +16,6 @@ final readonly class SentryCheck
     {
         $this->logger->error('Check Sentry log error');
 
-        throw new Exception('Check Sentry exception');
+        throw new SentryCheckException();
     }
 }
