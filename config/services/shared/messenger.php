@@ -12,26 +12,24 @@ use Shared\Infrastructure\Bus\MessengerEventBus;
 use Shared\Infrastructure\Bus\MessengerQueryBus;
 use Utils\Messenger\UnlimitedRetryStrategy;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-
-    $services
-        ->defaults()
-        ->autowire()
-        ->autoconfigure();
-
-    $services
-        ->set(UnlimitedRetryStrategy::class);
-
-    $services
-        ->set(QueryBus::class, MessengerQueryBus::class)
-        ->args([service('queryBus')]);
-
-    $services
-        ->set(EventBus::class, MessengerEventBus::class)
-        ->args([service('eventBus')]);
-
-    $services
-        ->set(CommandBus::class, MessengerCommandBus::class)
-        ->args([service('commandBus')]);
-};
+return App::config([
+    'services' => [
+        '_defaults' => [
+            'autowire' => true,
+            'autoconfigure' => true,
+        ],
+        UnlimitedRetryStrategy::class => [],
+        QueryBus::class => [
+            'class' => MessengerQueryBus::class,
+            'arguments' => ['$queryBus' => service('queryBus')],
+        ],
+        EventBus::class => [
+            'class' => MessengerEventBus::class,
+            'arguments' => ['$eventBus' => service('eventBus')],
+        ],
+        CommandBus::class => [
+            'class' => MessengerCommandBus::class,
+            'arguments' => ['$messageBus' => service('commandBus')],
+        ],
+    ],
+]);

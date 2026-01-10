@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
 use Shared\Application\Clock\Clock;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Test\Utils\TestDoubles\Clock\FixedClock;
 
-// @formatter:off
-return static function (ContainerConfigurator $container): void {
-    $services = $container->services();
-
-    $services
-        ->set(Clock::class)
-        ->class(FixedClock::class)
-        ->public();
-};
+return App::config([
+    'services' => [
+        Clock::class => [
+            'class' => FixedClock::class,
+            'public' => true,
+        ],
+    ],
+]);

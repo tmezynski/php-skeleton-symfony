@@ -2,10 +2,17 @@
 
 declare(strict_types=1);
 
-use Symfony\Config\MonologConfig;
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-return static function (MonologConfig $monolog): void {
-    $monolog
-        ->handler('terminal')
-        ->type('null');
-};
+return App::config([
+    'monolog' => [
+        'handlers' => [
+            'terminal' => [
+                'type' => null,
+            ],
+            'sentry' => [
+                'type' => null,
+            ],
+        ],
+    ],
+]);
