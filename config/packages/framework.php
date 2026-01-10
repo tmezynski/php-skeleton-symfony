@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Symfony\Config\FrameworkConfig;
 use Utils\ErrorController\ErrorController;
 
-// @formatter:off
-return static function (FrameworkConfig $framework): void {
-    // @formatter:on
-    $framework
-        ->secret(env('APP_SECRET'))
-        ->httpMethodOverride(false)
-        ->handleAllThrowables(true)
-        ->errorController(ErrorController::class);
+return App::config([
+    'parameters' => [
+        'suppressEnvs' => [env('SENTRY_DSN')->string()],
+    ],
+    'framework' => [
+        'secret' => env('APP_SECRET')->string(),
+        'http_method_override' => false,
+        'handle_all_throwables' => true,
+        'error_controller' => ErrorController::class,
 
-    $framework
-        ->phpErrors()
-        ->log();
-};
+        'php_errors' => [
+            'log' => true,
+        ],
+        'router' => [
+            'utf8' => true,
+        ],
+    ],
+]);

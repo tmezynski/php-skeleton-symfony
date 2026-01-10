@@ -8,18 +8,21 @@ use Shared\Application\Logger\Logger;
 use Shared\UserInterface\Endpoint\Monitoring\SentryCheck\SentryCheck;
 use Utils\ErrorController\ErrorController;
 
-// @formatter:off
-return static function (ContainerConfigurator $container): void {
-    // @formatter:on
-    $services = $container->services();
-
-    $services
-        ->set(ErrorController::class)
-        ->args([env('APP_ENV')])
-        ->public();
-
-    $services
-        ->set(SentryCheck::class)
-        ->args([service(Logger::class)])
-        ->public();
-};
+return App::config([
+    'services' => [
+        ErrorController::class => [
+            'class' => ErrorController::class,
+            'arguments' => [
+                '$environment' => env('APP_ENV'),
+            ],
+            'public' => true,
+        ],
+        SentryCheck::class => [
+            'class' => SentryCheck::class,
+            'arguments' => [
+                '$logger' => service(Logger::class),
+            ],
+            'public' => true,
+        ],
+    ],
+]);

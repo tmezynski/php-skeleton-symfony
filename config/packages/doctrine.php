@@ -4,21 +4,24 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Symfony\Config\DoctrineConfig;
-
-// @formatter:off
-return static function (DoctrineConfig $doctrine): void {
-    // DBAL
-    $doctrine
-        ->dbal()
-        ->connection('db')
-        ->url(env('DATABASE_URL'))
-        ->driver(env('DB_DRIVER'))
-        ->mappingType('enum', 'string');
-
-    $doctrine
-        ->orm()
-        ->entityManager('entity_manager')
-        ->connection('db')
-        ->autoMapping(false);
-};
+return App::config([
+    'doctrine' => [
+        'dbal' => [
+            'connection' => [
+                'name' => 'db',
+                'url' => env('DATABASE_URL')->string(),
+                'driver' => env('DB_DRIVER')->string(),
+                'mapping_types' => [
+                    'enum' => 'string',
+                ],
+            ],
+        ],
+        'orm' => [
+            'entity_manager' => [
+                'name' => 'default',
+                'connection' => 'db',
+                'auto_mapping' => false,
+            ],
+        ],
+    ],
+]);

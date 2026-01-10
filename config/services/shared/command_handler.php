@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Shared\Application\Bus\EventBus;
-use Test\Utils\TestDoubles\Command\Fake\FakeCommandHandler;
+use Shared\Application\Command\New\NewCommandHandler;
 
 return App::config([
     'services' => [
-        FakeCommandHandler::class => [
-            'class' => FakeCommandHandler::class,
-            'arguments' => ['$eventBus' => service(EventBus::class)],
+        NewCommandHandler::class => [
+            'class' => NewCommandHandler::class,
             'tags' => [
                 ['messenger.message_handler' => ['bus' => 'commandBus']],
             ],

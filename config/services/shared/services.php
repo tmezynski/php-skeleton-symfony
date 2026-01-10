@@ -7,11 +7,12 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Shared\Application\Clock\Clock;
 use Shared\Infrastructure\Clock\SystemClock;
 
-// @formatter:off
-return static function (ContainerConfigurator $container): void {
-    $services = $container->services();
-
-    $services
-        ->set(Clock::class)
-        ->class(SystemClock::class);
-};
+return App::config([
+    'services' => [
+        '_defaults' => [
+            'autowire' => false,
+            'autoconfigure' => false,
+        ],
+        Clock::class => ['class' => service(SystemClock::class)],
+    ],
+]);
