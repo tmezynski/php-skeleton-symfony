@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Shared\Application\Bus\EventBus;
-use Test\Utils\TestDoubles\Command\Fake\FakeCommandHandler;
+use Test\Integration\Shared\Application\Command\FakeCommandHandler;
 
 return App::config([
     'services' => [

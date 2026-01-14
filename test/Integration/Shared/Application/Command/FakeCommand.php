@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Utils\TestDoubles\Command\Fake;
+namespace Test\Integration\Shared\Application\Command;
 
 use Shared\Application\Command\SyncCommand;
 

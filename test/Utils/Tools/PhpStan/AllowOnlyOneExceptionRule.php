@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Utils\PhpStan;
+namespace Test\Utils\Tools\PhpStan;
 
 use Exception;
 use PhpParser\Node;

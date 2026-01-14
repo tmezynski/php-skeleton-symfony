@@ -3,7 +3,7 @@ includes:
   - vendor/phpstan/phpstan-symfony/extension.neon
 
 rules:
-  - Utils\PhpStan\AllowOnlyOneExceptionRule
+  - Test\Utils\Tools\PhpStan\AllowOnlyOneExceptionRule
 
 parameters:
   level: 9
