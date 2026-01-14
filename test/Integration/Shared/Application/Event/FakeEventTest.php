@@ -7,7 +7,6 @@ namespace Test\Integration\Shared\Application\Event;
 use PHPUnit\Framework\Attributes\Test;
 use Test\Integration\IntegrationTestCase;
 use Test\Utils\Dsl\Shared\CommandBusTrait;
-use Test\Utils\TestDoubles\Event\Fake\FakeEvent;
 
 final class FakeEventTest extends IntegrationTestCase
 {

@@ -31,8 +31,7 @@ final class DecimalTest extends TestCase
         Decimal::from([1]);
     }
 
-    #[Test]
-    #[DataProvider('validDecimalDataProvider')]
+    #[Test, DataProvider('validDecimalDataProvider')]
     public function canCreateDecimalFromValue(float|int|string $value, string $result): void
     {
         Assert::assertEquals($result, Decimal::from($value)->toString());
@@ -77,8 +76,7 @@ final class DecimalTest extends TestCase
         yield [1223.9456, '1223.9456'];
     }
 
-    #[Test]
-    #[DataProvider('addValuesDataProvider')]
+    #[Test, DataProvider('addValuesDataProvider')]
     public function addShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
         $amount1 = Decimal::from($value1);
@@ -104,8 +102,7 @@ final class DecimalTest extends TestCase
         yield ['0.34567', '100', '100.34567'];
     }
 
-    #[Test]
-    #[DataProvider('subValuesDataProvider')]
+    #[Test, DataProvider('subValuesDataProvider')]
     public function subShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
         $amount1 = Decimal::from($value1);
@@ -134,8 +131,7 @@ final class DecimalTest extends TestCase
         yield ['8', '6.4', '1.6'];
     }
 
-    #[Test]
-    #[DataProvider('mulValuesDataProvider')]
+    #[Test, DataProvider('mulValuesDataProvider')]
     public function mulShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
         $amount1 = Decimal::from($value1);
@@ -171,8 +167,7 @@ final class DecimalTest extends TestCase
         Assert::assertFalse(isset($result));
     }
 
-    #[Test]
-    #[DataProvider('divValuesDataProvider')]
+    #[Test, DataProvider('divValuesDataProvider')]
     public function divShouldReturnValidResult(string $value1, string $value2, string $result): void
     {
         $amount1 = Decimal::from($value1);
@@ -204,8 +199,7 @@ final class DecimalTest extends TestCase
         Decimal::from('1')->round(-1);
     }
 
-    #[Test]
-    #[DataProvider('roundDataProvider')]
+    #[Test, DataProvider('roundDataProvider')]
     public function roundToPassedPrecision(string $value, int $precision, string $result): void
     {
         $this->assertEquals(

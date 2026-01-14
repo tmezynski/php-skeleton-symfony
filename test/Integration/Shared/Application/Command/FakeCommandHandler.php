@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Test\Utils\TestDoubles\Command\Fake;
+namespace Test\Integration\Shared\Application\Command;
 
 use Shared\Application\Bus\EventBus;
-use Test\Utils\TestDoubles\Event\Fake\FakeEvent;
+use Test\Integration\Shared\Application\Event\FakeEvent;
 
 final readonly class FakeCommandHandler
 {
