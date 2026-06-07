@@ -34,6 +34,9 @@ final readonly class ErrorController
      *     message: string,
      *     code: int,
      *     httpCode?: int,
+     *     details?: string,
+     *     file?: string,
+     *     line?: int,
      * }
      */
     private function getBody(Throwable $exception): array

@@ -37,6 +37,9 @@ final class DecimalTest extends TestCase
         Assert::assertEquals($result, Decimal::from($value)->toString());
     }
 
+    /**
+     * @return Generator<int, array{float|int|string, string}, mixed, void>
+     */
     public static function validDecimalDataProvider(): Generator
     {
         yield ['-145,00', '-145.00'];
@@ -87,6 +90,9 @@ final class DecimalTest extends TestCase
         Assert::assertTrue($result->equals($amount2->add($amount1)));
     }
 
+    /**
+     * @return Generator<int, array{string, string, string}, mixed, void>
+     */
     public static function addValuesDataProvider(): Generator
     {
         yield ['-145,00', '-145.00', '-290.00'];
@@ -112,6 +118,9 @@ final class DecimalTest extends TestCase
         Assert::assertTrue($result->equals($amount1->sub($amount2)));
     }
 
+    /**
+     * @return Generator<int, array{string, string, string}, mixed, void>
+     */
     public static function subValuesDataProvider(): Generator
     {
         yield ['-145,00', '-145.00', '0.00'];
@@ -141,6 +150,9 @@ final class DecimalTest extends TestCase
         Assert::assertTrue($result->equals($amount1->mul($amount2)));
     }
 
+    /**
+     * @return Generator<int, array{string, string, string}, mixed, void>
+     */
     public static function mulValuesDataProvider(): Generator
     {
         yield ['-145,00', '-145.00', '21025,00'];
@@ -177,6 +189,9 @@ final class DecimalTest extends TestCase
         Assert::assertTrue($result->equals($amount1->div($amount2)));
     }
 
+    /**
+     * @return Generator<int, array{string, string, string}, mixed, void>
+     */
     public static function divValuesDataProvider(): Generator
     {
         yield ['100', '-2', '-50'];
@@ -208,6 +223,9 @@ final class DecimalTest extends TestCase
         );
     }
 
+    /**
+     * @return Generator<int, array{string, int, string}, mixed, void>
+     */
     public static function roundDataProvider(): Generator
     {
         yield ['1', 1, '1'];
