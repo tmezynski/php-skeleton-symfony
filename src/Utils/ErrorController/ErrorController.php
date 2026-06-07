@@ -73,7 +73,7 @@ final readonly class ErrorController
         }
 
         if ($exception instanceof NotFoundHttpException) {
-            return (int)$exception->getStatusCode();
+            return $exception->getStatusCode();
         }
 
         return $exception->getCode() >= 100 && $exception->getCode() < 500
