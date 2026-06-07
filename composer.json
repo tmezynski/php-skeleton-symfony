@@ -87,6 +87,9 @@
     "test:phpstan": [
       "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpstan analyse -c stan.neon --no-progress --no-interaction --no-ansi"
     ],
+    "test:phpstan:cache:clear": [
+      "phpstan clear-result-cache"
+    ],
     "test:csfixer": [
       "APP_ENV=test php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --dry-run --diff --allow-risky=yes"
     ],

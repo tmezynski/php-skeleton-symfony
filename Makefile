@@ -69,11 +69,15 @@ test: test-static test-unit test-integration test-acceptance
 
 ################################################### STATIC #############################################################
 .PHONY: test-static
-test-static: test-csfixer test-phpstan test-deptrac test-md
+test-static: test-security test-csfixer test-phpstan test-deptrac test-md
 
 .PHONY: fix-static
 fix-static:
 	@$(DC) exec php composer test:csfixer:fix
+
+.PHONY: test-security
+test-security:
+	@$(DC) exec php composer audit
 
 .PHONY: test-phpstan
 test-phpstan:
