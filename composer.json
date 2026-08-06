@@ -34,6 +34,9 @@
     "infection/infection": "^0.32.2",
     "phpmd/phpmd": "^2.15",
     "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-deprecation-rules": "^2.0",
+    "phpstan/phpstan-phpunit": "^2.0",
+    "phpstan/phpstan-strict-rules": "^2.0",
     "phpstan/phpstan-symfony": "^2.0",
     "phpunit/phpunit": "^12.5",
     "symfony/phpunit-bridge": "^8.0"

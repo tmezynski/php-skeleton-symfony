@@ -1,13 +1,18 @@
 includes:
   - phar://phpstan.phar/conf/bleedingEdge.neon
   - vendor/phpstan/phpstan-symfony/extension.neon
+  - vendor/phpstan/phpstan-phpunit/extension.neon
+  - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+  - vendor/phpstan/phpstan-strict-rules/rules.neon
+  - vendor/phpstan/phpstan-symfony/rules.neon
 
 rules:
   - Test\Utils\Tools\PhpStan\AllowOnlyOneExceptionRule
 
 parameters:
-  level: 9
+  level: max
   parallel:
+    jobSize: 20
     maximumNumberOfProcesses: 8
     processTimeout: 300.0
   paths:
